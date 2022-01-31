@@ -1,22 +1,70 @@
 import { Link } from "react-router-dom"
+import { useState } from 'react'
+import axios from 'axios'
+import BASE_URL from '../utility/base_url'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const userLogin = (e) => {
+        e.preventDefault();
+        const userData = {username, password};
+        console.log(userData)
+        const submit_url = BASE_URL+"/user/login"
+
+        axios.post(submit_url, userData)
+        .then(result => {
+            console.log(result)
+            if (result.data.success) {
+                document.getElementById("LoginForm").reset();
+                toast.success(result.data.message, {
+                    hideProgressBar: true
+                });
+                localStorage.setItem('token', result.data.token)
+                localStorage.setItem('isAuthenticated', true)
+                localStorage.setItem('userdetails', JSON.stringify(result.data.userdetails))
+                setTimeout(() => {
+                    navigate('/home')
+                }, 1500)
+                
+                
+            } else {
+                toast.error(result.data, {
+                    hideProgressBar: true
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            toast.error("Unable to login", {
+                hideProgressBar: true
+            });
+        })
+    }
     return (
         <div className="container px-5">
+            <ToastContainer/>
             <div className="row">
                 <div className="col-sm-9 col-md-8 col-lg-7 mx-auto">
                     <div className="card signin-card my-5">
                         <div className="card-body px-md-5 py-3 form-text">
                             <h3 className="text-center text-uppercase mb-4">Sign In</h3>
-                            <form>
+                            <form id="LoginForm">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control p-4" placeholder="Username"/>
+                                    <input type="text" class="form-control p-4" placeholder="Username"
+                                    onChange={(e)=>setUsername(e.target.value)}/>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control p-4" placeholder="Password"/>
+                                    <input type="password" class="form-control p-4" placeholder="Password"
+                                    onChange={(e)=>setPassword(e.target.value)}/>
                                 </div>
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                                    <button type="submit" class="btn btn-primary w-100" onClick={userLogin}>Sign In</button>
                                 </div>
                             </form>
                             <hr/>
@@ -33,8 +81,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            
-
         </div>
     )
 }

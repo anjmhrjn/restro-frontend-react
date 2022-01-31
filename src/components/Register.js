@@ -15,7 +15,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const customerRegister = (e) => {
+    const userRegister = (e) => {
         e.preventDefault();
         const userData = {username, email, user_type, password};
         console.log(userData)
@@ -83,7 +83,7 @@ const Register = () => {
                                             onChange={(e)=>setPassword(e.target.value)}/>
                                         </div>
                                         <div class="mb-3">
-                                            <button type="submit" class="btn btn-primary w-100" onClick={customerRegister}>Create Account</button>
+                                            <button type="submit" class="btn btn-primary w-100" onClick={userRegister}>Create Account</button>
                                         </div>
                                     </form>
                                     <hr/>
