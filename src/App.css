@@ -76,3 +76,10 @@ a {
 .login-link:hover {
   color: #004194;
 }
+
+.signin-card {
+  background: #EE6A3E;
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
+}

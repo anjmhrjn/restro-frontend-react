@@ -38,8 +38,8 @@ const Register = () => {
                                     </form>
                                     <hr/>
                                     <div className='text-center'>
-                                        <p className='fw-bold'>Already Registered?</p>
-                                        <h6>
+                                        <h6 className='fw-bold d-inline me-2'>Already Registered?</h6>
+                                        <h6 className='d-inline'>
                                             <Link to="/login">
                                                 <span className='login-link'>Login <i class="fas fa-angle-double-right"></i></span>
                                             </Link>
