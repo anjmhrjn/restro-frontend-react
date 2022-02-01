@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState, useContext } from 'react'
 import axios from 'axios'
-import BASE_URL from '../utility/base_url'
+import { BASE_URL } from "../utility/base_url";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
@@ -23,20 +23,23 @@ const Login = () => {
         axios.post(submit_url, userData)
         .then(result => {
             if (result.data.success) {
+                toast.success(result.data.message, {
+                    hideProgressBar: true
+                });
                 const userdetails = result.data.userdetails
                 document.getElementById("LoginForm").reset();
                 dispatch({type: 'USER', payload: true})
                 dispatch2({type: 'USERTYPE', payload: userdetails.user_type})
-                toast.success(result.data.message, {
-                    hideProgressBar: true
-                });
                 localStorage.setItem('token', result.data.token)
                 localStorage.setItem('isAuthenticated', true)
-                localStorage.setItem('userdetails', JSON.stringify(userdetails))
-                setTimeout(() => {
-                    navigate('/home')
-                }, 1000)
-                
+                localStorage.setItem('userId', userdetails.userId)
+                localStorage.setItem('username', userdetails.username)
+                localStorage.setItem('email', userdetails.email)
+                localStorage.setItem('user_type', userdetails.user_type)
+                // setTimeout(() => {
+                //     navigate('/home')
+                // }, 1000)
+                navigate('/home')
                 
             } else {
                 toast.error(result.data, {
@@ -52,8 +55,8 @@ const Login = () => {
         })
     }
     return (
-        <div className="container px-5">
-            <ToastContainer/>
+        <div className="container px-5 pt-5 mt-5">
+            {/* <ToastContainer/> */}
             <div className="row">
                 <div className="col-sm-9 col-md-8 col-lg-7 mx-auto">
                     <div className="card signin-card my-5">

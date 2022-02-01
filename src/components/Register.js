@@ -2,7 +2,7 @@ import register from '../images/register.svg'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
-import BASE_URL from '../utility/base_url'
+import { BASE_URL } from "../utility/base_url";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
@@ -29,10 +29,10 @@ const Register = () => {
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });
-                setTimeout(() => {
-                    navigate('/login')
-                }, 1500)
-                
+                // setTimeout(() => {
+                //     navigate('/login')
+                // }, 1500)
+                navigate('/login')
                 
             } else {
                 toast.error(result.data, {
@@ -49,9 +49,9 @@ const Register = () => {
     }
 
     return (
-        <div className="container px-5">
-            <ToastContainer/>
-            <div class="card" style={{background: '#EE6A3E'}}>
+        <div className="container px-5 pt-5 mt-5">
+            {/* <ToastContainer/> */}
+            <div class="card signin-card" style={{background: '#EE6A3E'}}>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-5 d-none d-md-flex">

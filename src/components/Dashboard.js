@@ -1,9 +1,9 @@
 const Dashboard = () => {
-    const userdetails = JSON.parse(localStorage.getItem('userdetails'))
+    const username = localStorage.getItem('username')
 
     return (
-        <div>
-            This is dashboard. Welcome user: {userdetails.username}
+        <div className="container mt-5 pt-5">
+            This is dashboard. Welcome user: {username}
         </div>
     )
 }

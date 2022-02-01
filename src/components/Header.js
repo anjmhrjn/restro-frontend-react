@@ -10,7 +10,7 @@ const Header = () => {
         return (
             <>
                 <li class="nav-item">
-                    <Link to="/home">
+                    <Link to="/my-tables">
                         <a class="nav-link">Tables</a>
                     </Link>
                 </li>
@@ -41,7 +41,6 @@ const Header = () => {
     }
 
     const RenderMenu = () => {
-        const user_details = JSON.parse(localStorage.getItem('userdetails'))
         let navLinks = <></>
         if (state2==='Business') {
             navLinks = RenderBusinessMenu()
@@ -52,7 +51,7 @@ const Header = () => {
         if (state) {
             return(
                 <>
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto text-dark mb-2 mb-lg-0">
                     {navLinks}             
                 </ul>
                 
@@ -82,9 +81,9 @@ const Header = () => {
         <header id="header" className="fixed-top ">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                    <a class="navbar-brand text-dark" href="#">Navbar</a>
+                    <button class="navbar-toggler text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon text-dark"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         

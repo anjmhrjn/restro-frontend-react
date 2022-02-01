@@ -65,6 +65,10 @@ select.form-control {
   font-size: 14px;
 }
 
+.text-primary {
+  color: #004194 !important;
+}
+
 .login-link {
   color: #F6F2EC;
 }
@@ -82,4 +86,44 @@ a {
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #041838 !important;
+  text-decoration: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #004194 !important;
+}
+
+.add-table-card {
+  background: #ACC9DC;
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
+  color: #041838;
+}
+
+.btn-secondary {
+  color: #F6F2EC;
+  background-color: #EE6A3E;
+  border-color: #EE6A3E;
+  border-radius: 50px;
+  padding: 8px 25px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.btn-secondary:hover {
+  background-color: #c56241;
+}
+
+.bg-secondary {
+  background-color: #004194 !important;
+  color: #F6F2EC;
 }

@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Mid from './components/Mid';
 import { createContext, useReducer } from 'react';
 import { initialState, reducer, userTypeReducer } from './reducer/UseReducer';
+import { ToastContainer } from 'react-toastify';
 
 export const UserContext = createContext();
 export const UserTypeContext = createContext();
@@ -17,6 +18,7 @@ function App() {
         <UserTypeContext.Provider value={{state2, dispatch2}}>
           <BrowserRouter>
             <Header/>
+            <ToastContainer/>
             <Mid/>
           </BrowserRouter>
         </UserTypeContext.Provider>
