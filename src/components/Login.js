@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import BASE_URL from '../utility/base_url'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import { UserContext, UserTypeContext } from "../App";
 
 const Login = () => {
+    const {state, dispatch} = useContext(UserContext);
+    const {state2, dispatch2} = useContext(UserTypeContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -14,23 +18,24 @@ const Login = () => {
     const userLogin = (e) => {
         e.preventDefault();
         const userData = {username, password};
-        console.log(userData)
         const submit_url = BASE_URL+"/user/login"
 
         axios.post(submit_url, userData)
         .then(result => {
-            console.log(result)
             if (result.data.success) {
+                const userdetails = result.data.userdetails
                 document.getElementById("LoginForm").reset();
+                dispatch({type: 'USER', payload: true})
+                dispatch2({type: 'USERTYPE', payload: userdetails.user_type})
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });
                 localStorage.setItem('token', result.data.token)
                 localStorage.setItem('isAuthenticated', true)
-                localStorage.setItem('userdetails', JSON.stringify(result.data.userdetails))
+                localStorage.setItem('userdetails', JSON.stringify(userdetails))
                 setTimeout(() => {
                     navigate('/home')
-                }, 1500)
+                }, 1000)
                 
                 
             } else {
