@@ -9,13 +9,14 @@ const TableAdd = () => {
     const [min_capacity, setMinCapacity] = useState('');
     const [max_capacity, setMaxCapacity] = useState('');
     const [table_number, setTableNo] = useState('');
-    const [tableOf, setTableOf] = useState('');
+    const [tableOf, setTableOf] = useState(localStorage.getItem('userId'));
 
     const tableSubmit = (e) => {
         e.preventDefault()
-        const userId = localStorage.getItem('userId')
-        setTableOf(userId)
+        
+        
         const tableData = {min_capacity, max_capacity, table_number, tableOf};
+        console.log(tableData)
         const submit_url = BASE_URL+"/table/add"
 
         axios.post(submit_url, tableData, getAxiosConfig())

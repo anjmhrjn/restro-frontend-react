@@ -1,4 +1,6 @@
-export const initialState = null;
+const isAuthenticated = localStorage.getItem("isAuthenticated")
+const user_type = localStorage.getItem("user_type")
+export const initialState = {"isAuthenticated": isAuthenticated, "user_type": user_type};
 
 export const reducer = (state, action) => {
     if (action.type === 'USER') {

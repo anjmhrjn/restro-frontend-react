@@ -10,8 +10,8 @@ export const UserContext = createContext();
 export const UserTypeContext = createContext();
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const [state2, dispatch2] = useReducer(userTypeReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState.isAuthenticated);
+  const [state2, dispatch2] = useReducer(userTypeReducer, initialState.user_type);
   return (
     <div className="App">
       <UserContext.Provider value={{state, dispatch}}>

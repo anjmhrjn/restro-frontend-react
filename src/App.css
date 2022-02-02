@@ -121,6 +121,7 @@ a {
 
 .btn-secondary:hover {
   background-color: #c56241;
+  border-color: #c56241;
 }
 
 .bg-secondary {
@@ -211,4 +212,22 @@ table thead th {
   -webkit-transition: 0.3s all ease;
   -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
+}
+
+/* input checkbox */
+input.apple-switch {
+  position: relative;
+  -webkit-appearance: none;
+  outline: none;
+  width: 50px;
+  height: 30px;
+  background-color: #fff;
+  border: 1px solid #ACC9DC;
+  border-radius: 50px;
+  box-shadow: inset -20px 0 0 0 #ACC9DC;
+}
+
+input.apple-switch:checked {
+  box-shadow: inset 20px 0 0 0 #ffbc41 !important;
+  border-color: #ffbc41 !important;
 }

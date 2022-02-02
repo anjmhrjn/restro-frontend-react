@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard"
 import Login from "./Login"
 import Logout from "./Logout"
 import Register from "./Register"
+import UpdateTable from "./business/UpdateTable"
 
 const Mid = () => {
     return (
@@ -15,6 +16,7 @@ const Mid = () => {
                 <Route path="/home" element={<Dashboard/>} />
                 <Route path="/table-add" element={<TableAdd/>} />
                 <Route path="/my-tables" element={<MyTables/>} />
+                <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>
