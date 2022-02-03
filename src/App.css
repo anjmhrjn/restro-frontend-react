@@ -231,3 +231,15 @@ input.apple-switch:checked {
   box-shadow: inset 20px 0 0 0 #ffbc41 !important;
   border-color: #ffbc41 !important;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.profile-icon {
+  width: 35px;
+}
+
+.text-spacing {
+  letter-spacing: 5px;
+}

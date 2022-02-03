@@ -1,3 +1,4 @@
+import account from '../images/account.png'
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { UserContext, UserTypeContext } from "../App";
@@ -5,6 +6,8 @@ import { UserContext, UserTypeContext } from "../App";
 const Header = () => {
     const {state, dispatch} = useContext(UserContext);
     const {state2, dispatch2} = useContext(UserTypeContext);
+    const username = localStorage.getItem('username')
+    const user_type = localStorage.getItem('user_type')
 
     const RenderBusinessMenu = () => {
         return (
@@ -40,24 +43,36 @@ const Header = () => {
         )
     }
 
-    const RenderMenu = () => {
-        let navLinks = <></>
-        if (state2==='Business') {
-            navLinks = RenderBusinessMenu()
-        } else if (state2 === 'Customer') {
-            navLinks = RenderCustomerMenu()
-        }
-        
+    let navLinks = <></>
+    if (state2==='Business') {
+        navLinks = RenderBusinessMenu()
+    } else if (state2 === 'Customer') {
+        navLinks = RenderCustomerMenu()
+    }
+
+    const RenderMenu = () => {    
         if (state) {
             return(
                 <>
-                <ul class="navbar-nav mx-auto text-dark mb-2 mb-lg-0">
-                    {navLinks}             
-                </ul>
-                
-                <Link to="/logout">
-                    <a class="btn get-started-btn">Logout</a>
-                </Link>
+                    <div class="dropdown justify-content-end">
+                        <a class="btn dropdown-toggle p-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src={account} className='img-fluid profile-icon dropdown-toggle' alt='user-profile' />
+                        </a>
+
+                        <ul class="dropdown-menu px-2 dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                            <li><span className='fw-bold text-uppercase fs-5 dropdown-item'>{username}</span></li>
+                            <li><span className='dropdown-item fw-bold text-spacing'>{user_type}</span></li>
+                            <hr className='my-2'/>
+                            <li>
+                                <Link to="/profile">
+                                    <a class=" dropdown-item">Profile </a>
+                                </Link>
+                                <Link to="/logout">
+                                    <a class=" dropdown-item">Logout <i class="fas fa-sign-out-alt text-danger ms-1"></i> </a>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </>
                 
                 
@@ -65,9 +80,6 @@ const Header = () => {
         } else {
             return(
                 <>
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                        {navLinks}             
-                    </ul>
                     <Link to="/login">
                         <a class="btn get-started-btn">Login</a>
                     </Link>
@@ -81,14 +93,24 @@ const Header = () => {
         <header id="header" className="fixed-top ">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
-                    <a class="navbar-brand text-dark" href="#">Navbar</a>
-                    <button class="navbar-toggler text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon text-dark"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand text-dark order-sm-1" href="#">Navbar</a>
+                    
+                    <div className='d-flex order-lg-3 order-sm-2'>
+                        <button class="navbar-toggler me-3 text-dark justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon text-dark"></span>
+                        </button>
                         
                         <RenderMenu />
                     </div>
+                    <div class="collapse navbar-collapse order-lg-2 order-sm-3" id="navbarSupportedContent">
+                        <ul class="navbar-nav text-dark mb-2 mb-lg-0">
+                            {navLinks}             
+                        </ul>
+                    </div>
+                    
+                    
+                    
+                    
                 </div>
             </nav>
         </header>

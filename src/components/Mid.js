@@ -6,6 +6,7 @@ import Login from "./Login"
 import Logout from "./Logout"
 import Register from "./Register"
 import UpdateTable from "./business/UpdateTable"
+import Profile from "./Profile"
 
 const Mid = () => {
     return (
@@ -14,6 +15,7 @@ const Mid = () => {
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
                 <Route path="/home" element={<Dashboard/>} />
+                <Route path="/profile" element={<Profile/>} />
                 <Route path="/table-add" element={<TableAdd/>} />
                 <Route path="/my-tables" element={<MyTables/>} />
                 <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
