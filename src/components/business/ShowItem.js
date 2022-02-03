@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { closeSwal } from "../../utility/base"
 import { toast } from "react-toastify"
 import { fireSwal } from "../../utility/base"
+import empty from "../../images/empty.svg"
 
 const ShowItem = () => {
     const [idata, setIdata] = useState([]);
@@ -101,7 +102,12 @@ const ShowItem = () => {
                                         <div className="card menu-card d-flex mb-4">
                                             <div className="card-body">
                                                 <div className="menu-thumbnail mb-2">
-                                                    <img src={BASE_URL + `/${item.images}`} className="img-fluid"/>
+                                                    {
+                                                        item.images !== '' ? 
+                                                        <img src={BASE_URL + `/${item.images}`} className="img-fluid"/> : 
+                                                        <img src={empty} className="img-fluid"/>
+                                                    }
+                                                    
                                                 </div>
                                                 <p className="text-center h4 text-dark mb-3">{item.name}</p>
                                                 <div className="scrollmenu mb-3">

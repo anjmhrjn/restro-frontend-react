@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { getAxiosConfig } from "../../utility/base";
 import { BASE_URL } from "../../utility/base_url";
 import { Link, useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import { toast } from "react-toastify";
-import { fireSwal } from "../../utility/base";
 
 let category_options = [];
 const AddItem = () => {
@@ -16,9 +15,6 @@ const AddItem = () => {
     const [categories, setSelected] = useState([]);
     const userId = localStorage.getItem('userId');
     const navigate = useNavigate();
-    let category_data = []
-
-    const unique = (arr) => [...new Set(arr)];
 
     useEffect(() => {
         const get_url = BASE_URL + '/all-categories'

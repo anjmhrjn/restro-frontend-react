@@ -10,6 +10,7 @@ import Profile from "./Profile"
 import AddItem from "./business/AddItem"
 import ShowItem from "./business/ShowItem"
 import AddCategory from "./business/AddCategory"
+import UpdateItem from "./business/UpdateItem"
 
 const Mid = () => {
     return (
@@ -23,6 +24,7 @@ const Mid = () => {
                 <Route path="/my-tables" element={<MyTables/>} />
                 <Route path="/add-item" element={<AddItem/>} />
                 <Route path="/my-items" element={<ShowItem/>} />
+                <Route path="/my-items/update/:iid" element={<UpdateItem/>} />
                 <Route path="/add-category" element={<AddCategory/>} />
                 <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
                 <Route path="/logout" element={<Logout/>} />
