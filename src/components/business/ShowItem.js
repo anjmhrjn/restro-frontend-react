@@ -1,13 +1,17 @@
 import { BASE_URL } from "../../utility/base_url"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { getAxiosConfig } from "../../utility/base"
 import { useNavigate } from "react-router-dom"
+import { closeSwal } from "../../utility/base"
+import { toast } from "react-toastify"
+import { fireSwal } from "../../utility/base"
 
 const ShowItem = () => {
     const [idata, setIdata] = useState([]);
     const navigate = useNavigate();
+    const delRef = useRef(null)
 
     useEffect(() => {
         const get_url = BASE_URL + '/my-items/'
@@ -22,8 +26,58 @@ const ShowItem = () => {
 
     const redirectToForm = (e) => {
         e.preventDefault()
-        const iid = e.target.getAttribute('data-table-id')
+        const iid = e.target.getAttribute('data-item-id')
         navigate(`/my-items/update/${iid}`)
+    }
+
+
+    const deleteItem = (e) => {
+        const iid = e.target.getAttribute('data-item-id')
+        const data_submit_url = BASE_URL + `/item/delete/${iid}`
+
+        const form_elem = delRef.current
+        form_elem.addEventListener('submit', delSubmit)
+        form_elem.setAttribute('data-submit-url', data_submit_url)
+
+        var buttons = form_elem.elements
+        for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].nodeName === "BUTTON" && buttons[i].type === "button") {
+              buttons[i].addEventListener('click', closeSwal);
+            }
+        }
+        
+        let swal_config = {
+            title: "Delete Item",
+            html: form_elem,
+            showConfirmButton: false
+        }
+        fireSwal(swal_config)
+    }
+
+    const delSubmit = (e) => {
+        e.preventDefault()
+        let del_url = e.target.getAttribute('data-submit-url')
+        axios.delete(del_url, getAxiosConfig())
+        .then(result => {
+            console.log(result)
+            if (result.data.success) {
+                toast.success(result.data.message, {
+                    hideProgressBar: true
+                });
+                window.location = window.location
+            } else {
+                toast.error(result.data.message, {
+                    hideProgressBar: true
+                });
+            }
+            
+        })
+        .catch(e => {
+            console.log(e)
+            toast.error('Unable to delete', {
+                hideProgressBar: true
+            });
+        })
     }
 
     return (
@@ -64,8 +118,8 @@ const ShowItem = () => {
                                                     <strong>Nrs. </strong>{item.price}
                                                 </div>
                                                 <div className="d-flex justify-content-center buttonsList">
-                                                    <button type="button" className="btn btn-sm btn-outline-primary me-2" data-tooltip="Update" data-table-id={item._id} onClick=""><i class="far fa-edit" data-table-id={item._id}></i></button>
-                                                    <button type="button" className="btn btn-sm btn-outline-danger" data-tooltip="Delete" data-table-id={item._id} onClick=""><i class="far fa-trash-alt" data-table-id={item._id}></i></button>
+                                                    <button type="button" className="btn btn-sm btn-outline-primary me-2" data-tooltip="Update" data-item-id={item._id} onClick={redirectToForm}><i class="far fa-edit" data-item-id={item._id}></i></button>
+                                                    <button type="button" className="btn btn-sm btn-outline-danger" data-tooltip="Delete" data-item-id={item._id} onClick={deleteItem}><i class="far fa-trash-alt" data-item-id={item._id}></i></button>
                                                 </div>
 
                                             </div>
@@ -82,6 +136,18 @@ const ShowItem = () => {
                     </div>
                 </div>
                 
+
+            </div>
+            <div className="d-none">
+                <form ref={delRef}>
+                    <p>Are you sure you want to delete this?</p>
+                    <hr/>
+                    <div className="d-flex justify-content-center buttonsList">
+                        <button type="submit" className="btn btn-outline-primary me-3">Yes</button>
+                        <button type="button" className="btn btn-outline-danger me-3 close-btn" onClick={closeSwal}>No</button>
+                    </div>
+                    
+                </form>
 
             </div>
             {/* <p><img src={BASE_URL+'/1643866267811ARTICLE 1.jpg'} className="img-fluid"  /></p> */}
