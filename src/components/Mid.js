@@ -7,6 +7,9 @@ import Logout from "./Logout"
 import Register from "./Register"
 import UpdateTable from "./business/UpdateTable"
 import Profile from "./Profile"
+import AddItem from "./business/AddItem"
+import ShowItem from "./business/ShowItem"
+import AddCategory from "./business/AddCategory"
 
 const Mid = () => {
     return (
@@ -18,6 +21,9 @@ const Mid = () => {
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/table-add" element={<TableAdd/>} />
                 <Route path="/my-tables" element={<MyTables/>} />
+                <Route path="/add-item" element={<AddItem/>} />
+                <Route path="/my-items" element={<ShowItem/>} />
+                <Route path="/add-category" element={<AddCategory/>} />
                 <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
