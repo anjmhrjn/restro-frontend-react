@@ -109,7 +109,7 @@ a {
   background: #ACC9DC;
   border: 0;
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 0.5rem 1rem 0 rgba(172, 201, 220, 10%);
   color: #041838;
 }
 
@@ -318,7 +318,7 @@ div.scrollmenu button {
 
 /* width */
 ::-webkit-scrollbar {
-  /* width: 10px; */
+  width: 8px;
   height: 10px;
   margin-top: 5px;
   display: block;
@@ -334,4 +334,21 @@ div.scrollmenu button {
 ::-webkit-scrollbar-thumb {
   background: #ACC9DC;
   border-radius: 10px;
+}
+
+.updateFormContainer {
+  /* font-size: 13px; */
+  border-right: 1px solid #8e9aaa;
+  margin-right: 15px;
+  padding-right: 15px;
+}
+
+@media only screen and (max-width: 991px) {
+  .updateFormContainer {
+    /* font-size: 13px; */
+    border-bottom: 1px solid #8e9aaa;
+    border-right: 0;
+    margin-bottom: 15px;
+    padding-right: 15px;
+  }
 }

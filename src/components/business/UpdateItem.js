@@ -142,44 +142,78 @@ const UpdateItem = () => {
     return(
         <div className="container mt-5 pt-5">
             <div className="row">
-                <div className="col-sm-10 col-md-9 col-lg-8 mx-auto">
+                <div className="col-sm-12 col-lg-10 mx-auto">
                     <div className="card add-item-card my-5">
                         <div className="card-body px-md-5 py-3 form-text">
-                            <h3 className="text-center text-uppercase text-primary mb-4">Update Item</h3>
-                            <form id="ItemAddForm" className="text-dark">
-                                <div class="mb-3 form-group">
-                                    <label className="mb-1 fw-bold">Name</label>
-                                    <input type="text" class="form-control p-4" placeholder="Item Name"
-                                    value={name}
-                                    onChange={(e)=>setName(e.target.value)}/>
+                            <div className="row">
+                                <div className="col-lg-4 pt-lg-5 updateFormContainer">
+                                    <div className=' form-text my-3'>
+                                        <div class="mb-3 form-group">
+                                            <form className="text-dark">
+                                                <label className="mb-1 fw-bold">Image</label>
+                                                <div>
+                                                    <input type="file" id="file-upload" 
+                                                    onChange={(e)=>setPimage(e.target.files[0])}
+                                                    />
+                                                </div>
+                                                <label className="mb-1 fw-bold">Current: </label>
+                                                {
+                                                    currentImage !== '' ? 
+                                                    <img src={BASE_URL + `/${currentImage}`} alt="Item image" className="img-fluid rounded" /> : 
+                                                    <img src={empty} alt="Empty image" className="img-fluid rounded" />
+                                                }
+                                                <div className="d-flex justify-content-center buttonsList mt-3">
+                                                    <button type="button" className="btn btn-sm btn-outline-primary me-2" data-tooltip="Update" data-item-id="" onClick={replaceImage}><i class="far fa-edit" data-item-id=""></i> Replace</button>
+                                                    <button type="button" className="btn btn-sm btn-outline-danger" data-tooltip="Delete" data-item-id="" onClick={removeImage}><i class="far fa-trash-alt" data-item-id=""></i> Remove</button>
+                                                </div>
+                                            </form>
+                                            
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label className="mb-1 fw-bold">Categories</label>
-                                    <MultiSelect
-                                        options={category_options}
-                                        value={categories}
-                                        onChange={setSelected}
-                                        labelledBy="Select"
-                                        hasSelectAll={false}
-                                    />
+                                <div className="col-lg-7 ">
+                                    <h3 className="text-center text-uppercase text-primary mb-4">Update Item</h3>
+                                    <form id="ItemAddForm" className="text-dark">
+                                        <div class="mb-3 form-group">
+                                            <label className="mb-1 fw-bold">Name</label>
+                                            <input type="text" class="form-control p-4" placeholder="Item Name"
+                                            value={name}
+                                            onChange={(e)=>setName(e.target.value)}/>
+                                        </div>
+                                        <div className="mb-3 form-group">
+                                            <label className="mb-1 fw-bold">Categories</label>
+                                            <MultiSelect
+                                                options={category_options}
+                                                value={categories}
+                                                onChange={setSelected}
+                                                labelledBy="Select"
+                                                hasSelectAll={false}
+                                            />
+                                        </div>
+                                        
+                                        <div class="mb-3 form-group">
+                                            <label className="mb-1 fw-bold">Price</label>
+                                            <input type="number" class="form-control p-4" placeholder="Item Price"
+                                            value={price}
+                                            onChange={(e)=>setPrice(e.target.value)}/>
+                                        </div>
+                                        <div class="mb-3 form-group">
+                                            <label className="mb-1 fw-bold">Description</label>
+                                            <textarea class="form-control px-4" rows="5" placeholder="Item Description" onChange={(e)=>setDesc(e.target.value)} value={description}></textarea>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary w-100" onClick={itemUpdate}>Submit <i class="far fa-check-square ms-2"></i></button>
+                                        </div>
+                                    </form>
+
                                 </div>
-                                
-                                <div class="mb-3 form-group">
-                                    <label className="mb-1 fw-bold">Price</label>
-                                    <input type="number" class="form-control p-4" placeholder="Item Price"
-                                    value={price}
-                                    onChange={(e)=>setPrice(e.target.value)}/>
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label className="mb-1 fw-bold">Description</label>
-                                    <textarea class="form-control px-4" rows="5" placeholder="Item Description" onChange={(e)=>setDesc(e.target.value)} value={description}></textarea>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary w-100" onClick={itemUpdate}>Submit <i class="far fa-check-square ms-2"></i></button>
-                                </div>
-                            </form>
-                            <hr className="text-dark"/>
+
+                            </div>
+                            
+                            
+                            {/* <hr className="text-dark"/>
                             <div className='d-flex justify-content-start form-text'>
                                 <div class="mb-3 form-group">
                                     <form className="text-dark">
@@ -203,7 +237,7 @@ const UpdateItem = () => {
                                     
                                     
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
