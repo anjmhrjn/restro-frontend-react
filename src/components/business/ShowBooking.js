@@ -146,6 +146,7 @@ const ShowBooking = () => {
                     <div className="col-sm-12 col-lg-10 mx-auto">
                         <div className="filter-section mt-4">
                             <h3 className="text-dark">Filter Bookings <i class="fas fa-filter"></i></h3>
+                            <hr/>
                             <form>
                                 <div className="row">
                                     <div className="status col-lg-12 col-md-6">
@@ -199,6 +200,7 @@ const ShowBooking = () => {
                                 </div>
                                 
                             </form>
+                            <hr/>
                             
 
                         </div>

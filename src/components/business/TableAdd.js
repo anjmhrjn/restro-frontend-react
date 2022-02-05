@@ -73,7 +73,7 @@ const TableAdd = () => {
                             <div className='d-flex justify-content-center form-text'>
                                 <h6 className='fw-bold text-dark me-2'>Add multiple table at once?</h6>
                                 <h6 className="text-dark">
-                                    <Link to="/register">
+                                    <Link to="/bulk-table-add">
                                         <span className='text-primary'> <i class="fas fa-hand-point-right"></i></span>
                                     </Link>
                                 </h6>

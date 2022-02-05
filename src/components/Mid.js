@@ -12,6 +12,7 @@ import ShowItem from "./business/ShowItem"
 import AddCategory from "./business/AddCategory"
 import UpdateItem from "./business/UpdateItem"
 import ShowBooking from "./business/ShowBooking"
+import BulkTableAdd from "./business/BulkTableAdd"
 
 const Mid = () => {
     return (
@@ -22,6 +23,7 @@ const Mid = () => {
                 <Route path="/home" element={<Dashboard/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/table-add" element={<TableAdd/>} />
+                <Route path="/bulk-table-add" element={<BulkTableAdd/>} />
                 <Route path="/my-tables" element={<MyTables/>} />
                 <Route path="/add-item" element={<AddItem/>} />
                 <Route path="/my-items" element={<ShowItem/>} />
