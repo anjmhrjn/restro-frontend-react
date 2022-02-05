@@ -13,6 +13,9 @@ import AddCategory from "./business/AddCategory"
 import UpdateItem from "./business/UpdateItem"
 import ShowBooking from "./business/ShowBooking"
 import BulkTableAdd from "./business/BulkTableAdd"
+import CategoryList from "./admin/CategoryList"
+import CategoryUpdate from "./admin/CategoryUpdate"
+import AdminCatAdd from "./admin/AdminCatAdd"
 
 const Mid = () => {
     return (
@@ -31,6 +34,9 @@ const Mid = () => {
                 <Route path="/show-bookings" element={<ShowBooking/>} />
                 <Route path="/add-category" element={<AddCategory/>} />
                 <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
+                <Route path="/category-list" element={<CategoryList/>} />
+                <Route path="/admin/add-category" element={<AdminCatAdd/>} />
+                <Route path="/admin/update-category/:cid" element={<CategoryUpdate/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>

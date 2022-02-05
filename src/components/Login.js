@@ -28,17 +28,14 @@ const Login = () => {
                 });
                 const userdetails = result.data.userdetails
                 document.getElementById("LoginForm").reset();
-                dispatch({type: 'USER', payload: true})
-                dispatch2({type: 'USERTYPE', payload: userdetails.user_type})
                 localStorage.setItem('token', result.data.token)
                 localStorage.setItem('isAuthenticated', true)
                 localStorage.setItem('userId', userdetails.userId)
                 localStorage.setItem('username', userdetails.username)
                 localStorage.setItem('email', userdetails.email)
                 localStorage.setItem('user_type', userdetails.user_type)
-                // setTimeout(() => {
-                //     navigate('/home')
-                // }, 1000)
+                dispatch({type: 'USER', payload: true})
+                dispatch2({type: 'USERTYPE', payload: userdetails.user_type})
                 navigate('/home')
                 
             } else {

@@ -6,8 +6,7 @@ import { UserContext, UserTypeContext } from "../App";
 const Header = () => {
     const {state, dispatch} = useContext(UserContext);
     const {state2, dispatch2} = useContext(UserTypeContext);
-    const username = localStorage.getItem('username')
-    const user_type = localStorage.getItem('user_type')
+    
 
     const RenderBusinessMenu = () => {
         return (
@@ -48,15 +47,36 @@ const Header = () => {
         )
     }
 
+    const RenderAdminMenu = () => {
+        return (
+            <>
+                <li class="nav-item">
+                    <Link to="/category-list">
+                        <a class="nav-link">Categories</a>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link to="/home">
+                        <a class="nav-link">Users</a>
+                    </Link>
+                </li>
+            </>
+        )
+    }
+
     let navLinks = <></>
     if (state2==='Business') {
         navLinks = RenderBusinessMenu()
     } else if (state2 === 'Customer') {
         navLinks = RenderCustomerMenu()
+    } else if (state2 === 'Admin') {
+        navLinks = RenderAdminMenu()
     }
 
     const RenderMenu = () => {    
         if (state) {
+            const username = localStorage.getItem('username')
+            const user_type = localStorage.getItem('user_type')
             return(
                 <>
                     <div class="dropdown justify-content-end">
