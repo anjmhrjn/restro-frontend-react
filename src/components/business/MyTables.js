@@ -106,7 +106,7 @@ const MyTables = () => {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody className="text-dark fw-bold ">
+                                <tbody className="">
                                     {tdata.map((table, index) => {
                                         return(
                                             <>

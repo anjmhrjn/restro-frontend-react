@@ -113,7 +113,7 @@ const ShowItem = () => {
                                                 <div className="scrollmenu mb-3">
                                                     {item.category_info.map(category => {
                                                         return(
-                                                            <button type="button" className="btn btn-primary px-3 py-1 me-3">{category.name}</button>
+                                                            <button type="button" className="btn btn-primary px-3 py-0 me-2">{category.name}</button>
                                                         )
                                                     })}
                                                 </div>

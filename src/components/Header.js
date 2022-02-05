@@ -22,6 +22,11 @@ const Header = () => {
                         <a class="nav-link">Menu</a>
                     </Link>
                 </li>
+                <li class="nav-item">
+                    <Link to="/show-bookings">
+                        <a class="nav-link">Bookings</a>
+                    </Link>
+                </li>
             </>
         )
     }

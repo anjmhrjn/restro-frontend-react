@@ -194,8 +194,7 @@ table thead th {
   background-color: #004194;
 }
 
-.custom-table tbody th,
-.custom-table tbody td {
+.custom-table tbody th {
   color: rgb(31, 31, 31);
   font-weight: 400;
   padding-bottom: 20px;
@@ -205,6 +204,10 @@ table thead th {
   -webkit-transition: 0.3s all ease;
   -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
+}
+
+.custom-table tbody td {
+  color: #041838;
 }
 
 .custom-table tbody th small,
