@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react"
-import { getAxiosConfig } from "../../utility/base"
+import { useState, useEffect, useRef } from "react"
+import { getAxiosConfig, fireSwal, closeSwal } from "../../utility/base"
 import axios from "axios"
 import { BASE_URL } from "../../utility/base_url"
+import { toast } from "react-toastify"
 
 const ShowBooking = () => {
-    const [bdata, setBdata] = useState([])
+    const [bdata, setBdata] = useState([]);
+    const [booking_status, setBookingStatus] = useState('');
+    const status_ref = useRef(null);
+    const [changed, setChange] = useState([]);
 
     useEffect(() => {
         const get_url = BASE_URL + '/business/my-booking'
@@ -15,7 +19,70 @@ const ShowBooking = () => {
         .catch(e => {
             console.log(e)
         })
-    }, [])
+    }, [changed])
+    
+    let handleChange = select => {
+        
+        setBookingStatus(prevValue => {
+            return select;
+        });
+        localStorage.setItem('status', select.target.value)
+    };
+
+    const updateStatus = (e) => {
+        const bid = e.target.getAttribute('data-table-id')
+        const data_submit_url = BASE_URL + `/booking/update-status/${bid}`
+
+        const form_elem = status_ref.current
+        form_elem.addEventListener('submit', statusSubmit)
+        form_elem.setAttribute('data-submit-url', data_submit_url)
+
+        var select = form_elem.elements
+        for (var i = 0; i < select.length; i++) {
+            if (select[i].nodeName === "SELECT" ) {
+                select[i].addEventListener('change', handleChange);
+            }
+        }
+        
+        let swal_config = {
+            title: "Change Status",
+            html: form_elem,
+            showConfirmButton: false
+        }
+        fireSwal(swal_config)
+    }
+
+    const statusSubmit = (e) => {
+        e.preventDefault()
+        const booking_data = {booking_status: localStorage.getItem('status')}
+        const submit_url = e.target.getAttribute('data-submit-url')
+        
+        axios.put(submit_url, booking_data, getAxiosConfig())
+        .then(result => {
+            if (result.data.success) {
+                console.log(result.data.success)
+                toast.success(result.data.message, {
+                    hideProgressBar: true
+                });
+                closeSwal()
+                localStorage.removeItem('status')
+                window.location = window.location
+                
+            } else {
+                toast.error(result.data.message, {
+                    hideProgressBar: true
+                });
+                
+            }
+            
+        })
+        .catch(e => {
+            console.log(e)
+            toast.error('Unable to delete', {
+                hideProgressBar: true
+            });
+        })
+    }
 
     return(
         <div className="mt-5 pt-4">
@@ -125,7 +192,7 @@ const ShowBooking = () => {
                                                     </td>
                                                     <td>
                                                         {booking.booking_status}
-                                                        <button className="btn btn-sm me-2" data-tooltip="Update" data-table-id={booking._id} ><i class="fas fa-pen text-danger" data-table-id={booking._id}></i></button>
+                                                        <button className="btn btn-sm me-2" data-tooltip="Update" data-table-id={booking._id} onClick={updateStatus}><i class="fas fa-pen text-danger" data-table-id={booking._id}></i></button>
                                                     </td>
                                                     
                                                 </tr>
@@ -138,6 +205,26 @@ const ShowBooking = () => {
                     </div>
 
                 </div>
+
+            </div>
+            <div className="d-none">
+                <form ref={status_ref}>
+                    <hr/>
+                    <div className="mb-3">
+                        <select className="form-control">
+                            <option value="Requested">Requested</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Disapproved">Disapproved</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Completed">Completed</option>
+
+                        </select>
+                    </div>
+                    <div className="d-flex justify-content-center buttonsList">
+                        <button type="submit" className="btn btn-outline-primary me-3">Yes</button>
+                    </div>
+                    
+                </form>
 
             </div>
 
