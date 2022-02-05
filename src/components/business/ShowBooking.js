@@ -8,7 +8,14 @@ const ShowBooking = () => {
     const [bdata, setBdata] = useState([]);
     const [booking_status, setBookingStatus] = useState('');
     const status_ref = useRef(null);
-    const [changed, setChange] = useState([]);
+    const [changed, setChange] = useState('');
+    const [isRequested, setIsRequested] = useState(true);
+    const [isApproved, setIsApproved] = useState(true);
+    const [isDisapproved, setIsDisapproved] = useState(true);
+    const [isCompleted, setIsCompleted] = useState(true);
+    const [isCancelled, setIsCancelled] = useState(true);
+    const [date, setDate] = useState('');
+    
 
     useEffect(() => {
         const get_url = BASE_URL + '/business/my-booking'
@@ -84,6 +91,47 @@ const ShowBooking = () => {
         })
     }
 
+    const filterBookings = (e) => {
+        e.preventDefault()
+        let status_types = []
+        const submit_url = BASE_URL + '/booking/filter'
+        if (isRequested) {
+            status_types.push('Requested')
+        } 
+        if (isApproved) {
+            status_types.push('Approved')
+        }
+        if (isDisapproved) {
+            status_types.push('Disapproved')
+        }
+        if (isCancelled) {
+            status_types.push('Cancelled')
+        }
+        if (isCompleted) {
+            status_types.push('Completed')
+        }
+        const booking_data = {status_types: status_types, date: date}
+        
+        axios.post(submit_url, booking_data, getAxiosConfig())
+        .then(result => {
+            console.log(result)
+            if(result.data.length > 0) {
+                setBdata(result.data)
+            } else {
+                toast.error('No results!', {
+                    hideProgressBar: true
+                });
+            }
+            
+        })
+        .catch(e => {
+            console.log(e)
+            toast.error('Unable to delete', {
+                hideProgressBar: true
+            });
+        })
+    }
+
     return(
         <div className="mt-5 pt-4">
             <section className="container-fluid bg-secondary">
@@ -106,40 +154,47 @@ const ShowBooking = () => {
                                             <div className="me-3 mb-2 d-flex align-items-center">
                                                 <label class="me-2 text-dark fw-bold" for="requested">Requested:</label>
                                                 <input class="apple-switch" type="checkbox" id="requested" 
-                                                />
+                                                checked={isRequested} 
+                                                onChange={(e) => {setIsRequested(!isRequested)}}/>
                                             </div>
                                             <div className="me-3 mb-2 d-flex align-items-center">
                                                 <label class="me-2 text-dark fw-bold" for="approved">Approved:</label>
                                                 <input class="apple-switch" type="checkbox" id="approved" 
-                                                />
+                                                checked={isApproved} 
+                                                onChange={(e) => {setIsApproved(!isApproved)}}/>
                                             </div>
                                             <div className="me-3 mb-2 d-flex align-items-center">
                                                 <label class="me-2 text-dark fw-bold" for="cancelled">Cancelled:</label>
                                                 <input class="apple-switch" type="checkbox" id="cancelled" 
-                                                />
+                                                checked={isCancelled} 
+                                                onChange={(e) => {setIsCancelled(!isCancelled)}}/>
                                             </div>
                                             <div className="me-2 mb-2 d-flex align-items-center">
                                                 <label class="me-2 text-dark fw-bold" for="disapproved">Disapproved:</label>
                                                 <input class="apple-switch" type="checkbox" id="disapproved" 
-                                                />
+                                                checked={isDisapproved} 
+                                                onChange={(e) => {setIsDisapproved(!isDisapproved)}}/>
                                             </div>
                                             <div className="me-2 mb-2 d-flex align-items-center">
                                                 <label class="me-2 text-dark fw-bold" for="completed">Completed:</label>
                                                 <input class="apple-switch" type="checkbox" id="completed" 
-                                                />
+                                                checked={isCompleted} 
+                                                onChange={(e) => {setIsCompleted(!isCompleted)}}/>
                                             </div>
-                                            
-                                            
                                         </div>
-
                                     </div>
                                     <div className="col-md-6">
                                         <div className="date">
                                             <h3>Select Date:</h3>
-                                            <input type="date" className="form-control" />
+                                            <input type="date" className="form-control" 
+                                            value={date} 
+                                            onChange={(e) => {setDate(e.target.value)}}/>
                                         </div>
-
                                     </div>
+                                    <div className="col-12 d-flex justify-content-center my-2 ">
+                                        <button type="submit" className="btn btn-secondary" onClick={filterBookings}>Apply Filter <i class="fa fa-paper-plane ms-2"></i></button>
+                                    </div>
+                                    
 
                                 </div>
                                 
@@ -180,7 +235,7 @@ const ShowBooking = () => {
                                                     <td>
                                                         {`
                                                             ${requested_date.getUTCFullYear()}
-                                                            -${requested_date.getUTCMonth()}
+                                                            -${requested_date.getUTCMonth()+1}
                                                             -${requested_date.getUTCDate()}
                                                         `}
                                                     </td>
