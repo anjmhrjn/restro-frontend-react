@@ -8,6 +8,7 @@ import { getAxiosConfig } from "../../utility/base";
 
 const Restaurant = () => {
     const [rdata, setRdata] = useState([]);
+    const [name, setName] = useState('');
 
     useEffect(() => {
         const get_url = BASE_URL + '/all-business/'
@@ -24,6 +25,19 @@ const Restaurant = () => {
     const tableBtnClicked = (id) => {
         console.log(id)
     }
+
+    const searchRestro = (e) => {
+        e.preventDefault()
+        const get_url = BASE_URL + `/search-restaurant/${name}`
+        axios.get(get_url, getAxiosConfig())
+        .then(result => {
+            console.log(result)
+            setRdata(result.data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
     
     return(
         <div className="pt-4 mt-5">
@@ -35,14 +49,21 @@ const Restaurant = () => {
                 </div>
             </section>
             <div class="container mt-5">
-                <div class="d-flex justify-content-between">
-                    <h4>Available Restaurants</h4> 
-                    {/* <button class="btn btn-sm btn-outline-dark">Apply all</button> */}
+                <div class="d-md-flex justify-content-between">
+                    <h4>Available Restaurants</h4>
+                    <form>
+                        <div className="d-flex">
+                            <input className="form-control me-2" placeholder="Name of restaurant..." 
+                            onChange={(e) => {setName(e.target.value)}}/>
+                            <button type="submit" class="btn btn-sm btn-secondary" onClick={searchRestro}>Search</button>
+                        </div> 
+                    </form>
+                    
                 </div>
                 <div class="row mt-2 g-1 ">
                 {rdata.map((restro, index) => {
                     return(
-                        <div class="col-md-4 col-lg-3 mb-3">
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
                             <div class="card menu-card p-2" style={{width: "14rem"}}>
                                 {/* <div class="text-end"> <small>Full Time</small> </div> */}
                                 <div class="text-center mt-2 p-3"> 
