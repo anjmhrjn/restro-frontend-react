@@ -16,6 +16,8 @@ import BulkTableAdd from "./business/BulkTableAdd"
 import CategoryList from "./admin/CategoryList"
 import CategoryUpdate from "./admin/CategoryUpdate"
 import AdminCatAdd from "./admin/AdminCatAdd"
+import FormValidation from "./FormValidation"
+import Restaurant from "./customer/Restaurant"
 
 const Mid = () => {
     return (
@@ -37,6 +39,8 @@ const Mid = () => {
                 <Route path="/category-list" element={<CategoryList/>} />
                 <Route path="/admin/add-category" element={<AdminCatAdd/>} />
                 <Route path="/admin/update-category/:cid" element={<CategoryUpdate/>} />
+                <Route path="/form-validation" element={<FormValidation/>} />
+                <Route path="/all-restaurants" element={<Restaurant/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>

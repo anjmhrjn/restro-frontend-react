@@ -355,3 +355,8 @@ div.scrollmenu button {
     padding-right: 15px;
   }
 }
+
+
+.invalid {
+  border: 1px solid red;
+}
