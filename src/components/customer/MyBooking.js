@@ -1,143 +1,47 @@
-import { useState, useEffect, useRef } from "react"
-import { getAxiosConfig, fireSwal, closeSwal } from "../../utility/base"
+import { useState, useEffect } from "react"
 import axios from "axios"
+import { getAxiosConfig } from "../../utility/base"
 import { BASE_URL } from "../../utility/base_url"
-import { toast } from "react-toastify"
 
-const ShowBooking = () => {
-    const [bdata, setBdata] = useState([]);
-    const [booking_status, setBookingStatus] = useState('');
-    const status_ref = useRef(null);
-    const [changed, setChange] = useState('');
+const MyBooking = () => {
     const [isRequested, setIsRequested] = useState(true);
     const [isApproved, setIsApproved] = useState(true);
     const [isDisapproved, setIsDisapproved] = useState(true);
     const [isCompleted, setIsCompleted] = useState(true);
     const [isCancelled, setIsCancelled] = useState(true);
     const [date, setDate] = useState('');
-    
+    const [bdata, setBdata] = useState([]);
 
     useEffect(() => {
-        const get_url = BASE_URL + '/business/my-booking'
+        const get_url = BASE_URL + '/my-bookings'
         axios.get(get_url, getAxiosConfig())
         .then(result => {
+            console.log(result)
             setBdata(result.data)
         })
         .catch(e => {
             console.log(e)
         })
-    }, [changed])
-    
-    let handleChange = select => {
-        
-        setBookingStatus(prevValue => {
-            return select;
-        });
-        localStorage.setItem('status', select.target.value)
-    };
-
-    const updateStatus = (e) => {
-        const bid = e.target.getAttribute('data-table-id')
-        const data_submit_url = BASE_URL + `/booking/update-status/${bid}`
-
-        const form_elem = status_ref.current
-        form_elem.addEventListener('submit', statusSubmit)
-        form_elem.setAttribute('data-submit-url', data_submit_url)
-
-        var select = form_elem.elements
-        for (var i = 0; i < select.length; i++) {
-            if (select[i].nodeName === "SELECT" ) {
-                select[i].addEventListener('change', handleChange);
-            }
-        }
-        
-        let swal_config = {
-            title: "Change Status",
-            html: form_elem,
-            showConfirmButton: false
-        }
-        fireSwal(swal_config)
-    }
-
-    const statusSubmit = (e) => {
-        e.preventDefault()
-        const booking_data = {booking_status: localStorage.getItem('status')}
-        const submit_url = e.target.getAttribute('data-submit-url')
-        
-        axios.put(submit_url, booking_data, getAxiosConfig())
-        .then(result => {
-            if (result.data.success) {
-                console.log(result.data.success)
-                toast.success(result.data.message, {
-                    hideProgressBar: true
-                });
-                closeSwal()
-                localStorage.removeItem('status')
-                window.location = window.location
-                
-            } else {
-                toast.error(result.data.message, {
-                    hideProgressBar: true
-                });
-                
-            }
-            
-        })
-        .catch(e => {
-            console.log(e)
-            toast.error('Unable to delete', {
-                hideProgressBar: true
-            });
-        })
-    }
+    }, [])
 
     const filterBookings = (e) => {
         e.preventDefault()
-        let status_types = []
-        const submit_url = BASE_URL + '/booking/filter'
-        if (isRequested) {
-            status_types.push('Requested')
-        } 
-        if (isApproved) {
-            status_types.push('Approved')
-        }
-        if (isDisapproved) {
-            status_types.push('Disapproved')
-        }
-        if (isCancelled) {
-            status_types.push('Cancelled')
-        }
-        if (isCompleted) {
-            status_types.push('Completed')
-        }
-        const booking_data = {status_types: status_types, date: date}
-        
-        axios.post(submit_url, booking_data, getAxiosConfig())
-        .then(result => {
-            console.log(result)
-            if(result.data.length > 0) {
-                setBdata(result.data)
-            } else {
-                toast.error('No results!', {
-                    hideProgressBar: true
-                });
-            }
-            
-        })
-        .catch(e => {
-            console.log(e)
-            toast.error('Unable to delete', {
-                hideProgressBar: true
-            });
-        })
+    }
+
+    const redirectToForm = (id) => {
+        console.log(id)
+    }
+
+    const delClick = (id) => {
+        console.log(id)
     }
 
     return(
         <div className="mt-5 pt-4">
             <section className="container-fluid bg-secondary">
                 <div className="text-center py-3">
-                    <p className="fs-1 fw-bold">Bookings</p>
-                    <p class="fst-italic">Here are the list of bookings for your restaurant.</p>
+                    <p className="fs-1 fw-bold">My Bookings</p>
+                    <p class="fst-italic">Here are the bookings you have made so far.</p>
                 </div>
             </section>
             <div className="container">
@@ -248,8 +152,10 @@ const ShowBooking = () => {
                                                         `}
                                                     </td>
                                                     <td>
-                                                        {booking.booking_status}
-                                                        <button className="btn btn-sm me-2" data-tooltip="Update" data-table-id={booking._id} onClick={updateStatus}><i class="fas fa-pen text-danger" data-table-id={booking._id}></i></button>
+                                                        <div className="d-flex justify-content-center buttonsList">
+                                                            <button type="button" className="btn btn-sm btn-outline-primary me-2" data-tooltip="Update" onClick={(e) => {redirectToForm(booking._id)}}><i class="far fa-edit"></i></button>
+                                                            <button type="button" className="btn btn-sm btn-outline-danger" data-tooltip="Delete" onClick={(e) => {delClick(booking._id)}}><i class="far fa-trash-alt"></i></button>
+                                                        </div>
                                                     </td>
                                                     
                                                 </tr>
@@ -264,30 +170,8 @@ const ShowBooking = () => {
                 </div>
 
             </div>
-            <div className="d-none">
-                <form ref={status_ref}>
-                    <hr/>
-                    <div className="mb-3">
-                        <select className="form-control">
-                            <option value="Requested">Requested</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Disapproved">Disapproved</option>
-                            <option value="Cancelled">Cancelled</option>
-                            <option value="Completed">Completed</option>
-
-                        </select>
-                    </div>
-                    <div className="d-flex justify-content-center buttonsList">
-                        <button type="submit" className="btn btn-outline-primary me-3">Change Status <i class="fas fa-check ms-1"></i></button>
-                    </div>
-                    
-                </form>
-
-            </div>
-
-
         </div>
     )
 }
 
-export default ShowBooking
+export default MyBooking
