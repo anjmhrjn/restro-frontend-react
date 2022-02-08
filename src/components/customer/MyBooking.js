@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { getAxiosConfig } from "../../utility/base"
 import { BASE_URL } from "../../utility/base_url"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
 
 const MyBooking = () => {
     const [isRequested, setIsRequested] = useState(true);
@@ -11,6 +13,7 @@ const MyBooking = () => {
     const [isCancelled, setIsCancelled] = useState(true);
     const [date, setDate] = useState('');
     const [bdata, setBdata] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const get_url = BASE_URL + '/my-bookings'
@@ -26,10 +29,48 @@ const MyBooking = () => {
 
     const filterBookings = (e) => {
         e.preventDefault()
+        let status_types = []
+        const submit_url = BASE_URL + '/booking/filter'
+        if (isRequested) {
+            status_types.push('Requested')
+        } 
+        if (isApproved) {
+            status_types.push('Approved')
+        }
+        if (isDisapproved) {
+            status_types.push('Disapproved')
+        }
+        if (isCancelled) {
+            status_types.push('Cancelled')
+        }
+        if (isCompleted) {
+            status_types.push('Completed')
+        }
+        const booking_data = {status_types: status_types, date: date}
+        
+        axios.post(submit_url, booking_data, getAxiosConfig())
+        .then(result => {
+            console.log(result)
+            if(result.data.length > 0) {
+                setBdata(result.data)
+            } else {
+                toast.error('No results!', {
+                    hideProgressBar: true
+                });
+            }
+            
+        })
+        .catch(e => {
+            console.log(e)
+            toast.error('Unable to delete', {
+                hideProgressBar: true
+            });
+        })
     }
 
     const redirectToForm = (id) => {
         console.log(id)
+        navigate(`/booking/${id}/update`)
     }
 
     const delClick = (id) => {
@@ -120,6 +161,7 @@ const MyBooking = () => {
                                         <th>Requested Date</th>
                                         <th>Time</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="">
@@ -151,6 +193,7 @@ const MyBooking = () => {
                                                             - ${end_time.getHours()}: ${end_time.getMinutes()}
                                                         `}
                                                     </td>
+                                                    <td>{booking.booking_status}</td>
                                                     <td>
                                                         <div className="d-flex justify-content-center buttonsList">
                                                             <button type="button" className="btn btn-sm btn-outline-primary me-2" data-tooltip="Update" onClick={(e) => {redirectToForm(booking._id)}}><i class="far fa-edit"></i></button>

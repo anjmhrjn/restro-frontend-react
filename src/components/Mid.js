@@ -21,6 +21,7 @@ import Restaurant from "./customer/Restaurant"
 import AvailableTables from "./customer/AvailableTables"
 import BookTable from "./customer/BookTable"
 import MyBooking from "./customer/MyBooking"
+import UpdateBooking from "./customer/UpdateBooking"
 
 const Mid = () => {
     return (
@@ -47,6 +48,7 @@ const Mid = () => {
                 <Route path="/:rid/available-tables" element={<AvailableTables/>} />
                 <Route path="/table/:tid/book" element={<BookTable/>} />
                 <Route path="/my-bookings" element={<MyBooking/>} />
+                <Route path="/booking/:bid/update" element={<UpdateBooking/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>
