@@ -18,6 +18,8 @@ import CategoryUpdate from "./admin/CategoryUpdate"
 import AdminCatAdd from "./admin/AdminCatAdd"
 import FormValidation from "./FormValidation"
 import Restaurant from "./customer/Restaurant"
+import AvailableTables from "./customer/AvailableTables"
+import BookTable from "./customer/BookTable"
 
 const Mid = () => {
     return (
@@ -41,6 +43,8 @@ const Mid = () => {
                 <Route path="/admin/update-category/:cid" element={<CategoryUpdate/>} />
                 <Route path="/form-validation" element={<FormValidation/>} />
                 <Route path="/all-restaurants" element={<Restaurant/>} />
+                <Route path="/:rid/available-tables" element={<AvailableTables/>} />
+                <Route path="/table/:tid/book" element={<BookTable/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>

@@ -278,7 +278,7 @@ const ShowBooking = () => {
                         </select>
                     </div>
                     <div className="d-flex justify-content-center buttonsList">
-                        <button type="submit" className="btn btn-outline-primary me-3">Yes</button>
+                        <button type="submit" className="btn btn-outline-primary me-3">Change Status <i class="fas fa-check ms-1"></i></button>
                     </div>
                     
                 </form>

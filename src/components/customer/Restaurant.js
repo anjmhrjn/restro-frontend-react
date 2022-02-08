@@ -2,20 +2,20 @@ import empty from "../../images/empty.svg"
 import account from "../../images/account.png"
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../utility/base_url";
 import { getAxiosConfig } from "../../utility/base";
 
 const Restaurant = () => {
     const [rdata, setRdata] = useState([]);
     const [name, setName] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const get_url = BASE_URL + '/all-business/'
         axios.get(get_url, getAxiosConfig())
         .then(result => {
             setRdata(result.data)
-            console.log(result.data[0].user_image === undefined)
         })
         .catch(e => {
             console.log(e)
@@ -23,7 +23,8 @@ const Restaurant = () => {
     }, [])
 
     const tableBtnClicked = (id) => {
-        console.log(id)
+        navigate(`/${id}/available-tables`)
+
     }
 
     const searchRestro = (e) => {
@@ -31,7 +32,6 @@ const Restaurant = () => {
         const get_url = BASE_URL + `/search-restaurant/${name}`
         axios.get(get_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
             setRdata(result.data)
         })
         .catch(e => {
@@ -69,7 +69,7 @@ const Restaurant = () => {
                                 <div class="text-center mt-2 p-3"> 
                                     {
                                         restro.user_image !== undefined ? 
-                                        <img src={BASE_URL + `/${restro.user_image}`} className="img-fluid" width="60" /> : 
+                                        <img src={BASE_URL + `/${restro.user_image}`} className="rounded-circle img-fluid" width="60" /> : 
                                         <img src={account} width="60" className="img-fluid" />
                                     }
                                      
