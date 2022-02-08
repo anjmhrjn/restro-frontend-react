@@ -94,7 +94,6 @@ const UpdateBooking = () => {
                                                 <input type="time" className='form-control'
                                                 value={start_time}
                                                 onChange={(e) => setStartTime(e.target.value)}/>
-        
                                             </div>
                                             <div className='col-md-6'>
                                                 <label className="mb-1 fw-bold">End Time</label>

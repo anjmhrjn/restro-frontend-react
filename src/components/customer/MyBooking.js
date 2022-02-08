@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { getAxiosConfig } from "../../utility/base"
 import { BASE_URL } from "../../utility/base_url"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
+import { closeSwal, fireSwal } from "../../utility/base"
 
 const MyBooking = () => {
     const [isRequested, setIsRequested] = useState(true);
@@ -14,6 +15,8 @@ const MyBooking = () => {
     const [date, setDate] = useState('');
     const [bdata, setBdata] = useState([]);
     const navigate = useNavigate()
+
+    const del_ref = useRef(null);
 
     useEffect(() => {
         const get_url = BASE_URL + '/my-bookings'
@@ -73,8 +76,53 @@ const MyBooking = () => {
         navigate(`/booking/${id}/update`)
     }
 
-    const delClick = (id) => {
-        console.log(id)
+
+    const delClick = (tid) => {
+        const data_submit_url = BASE_URL + `/booking/delete/${tid}`
+
+        const form_elem = del_ref.current
+        form_elem.addEventListener('submit', delSubmit)
+        form_elem.setAttribute('data-submit-url', data_submit_url)
+
+        var buttons = form_elem.elements
+        for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].nodeName === "BUTTON" && buttons[i].type === "button") {
+              buttons[i].addEventListener('click', closeSwal);
+            }
+        }
+        
+        let swal_config = {
+            title: "Delete Booking",
+            html: form_elem,
+            showConfirmButton: false
+        }
+        fireSwal(swal_config)
+    }
+
+    const delSubmit = (e) => {
+        e.preventDefault()
+        let del_url = e.target.getAttribute('data-submit-url')
+        axios.delete(del_url, getAxiosConfig())
+        .then(result => {
+            console.log(result)
+            if (result.data.success) {
+                toast.success(result.data.message, {
+                    hideProgressBar: true
+                });
+                window.location = window.location
+            } else {
+                toast.error(result.data.message, {
+                    hideProgressBar: true
+                });
+            }
+            
+        })
+        .catch(e => {
+            console.log(e)
+            toast.error('Unable to delete', {
+                hideProgressBar: true
+            });
+        })
     }
 
     return(
@@ -88,7 +136,7 @@ const MyBooking = () => {
             <div className="container">
                 
                 <div className="row">
-                    <div className="col-sm-12 col-lg-10 mx-auto">
+                    <div className="col-sm-12 col-lg-10 mx-auto mb-5">
                         <div className="filter-section mt-4">
                             <h3 className="text-dark">Filter Bookings <i class="fas fa-filter"></i></h3>
                             <hr/>
@@ -177,20 +225,18 @@ const MyBooking = () => {
                                                     <td>{booking.total_seats}</td>
                                                     <td>{booking.table_detail.table_number}</td>
                                                     <td>
-                                                        Min: {booking.table_detail.min_capacity} <br/>
-                                                        Max: {booking.table_detail.max_capacity}
+                                                        Minimum: {booking.table_detail.min_capacity} <br/>
+                                                        Maximum: {booking.table_detail.max_capacity}
                                                     </td>
                                                     <td>
                                                         {`
-                                                            ${requested_date.getUTCFullYear()}
-                                                            -${requested_date.getUTCMonth()+1}
-                                                            -${requested_date.getUTCDate()}
+                                                            ${requested_date.getUTCFullYear()}-${requested_date.getUTCMonth()+1}-${requested_date.getUTCDate()}
                                                         `}
                                                     </td>
                                                     <td>
                                                         {`
-                                                            ${start_time.getHours()}: ${start_time.getMinutes()}
-                                                            - ${end_time.getHours()}: ${end_time.getMinutes()}
+                                                            ${start_time.getHours()} : ${start_time.getMinutes()}
+                                                            - ${end_time.getHours()} : ${end_time.getMinutes()}
                                                         `}
                                                     </td>
                                                     <td>{booking.booking_status}</td>
@@ -211,6 +257,18 @@ const MyBooking = () => {
                     </div>
 
                 </div>
+
+            </div>
+            <div className="d-none">
+                <form ref={del_ref}>
+                    <p>Are you sure you want to delete this?</p>
+                    <hr/>
+                    <div className="d-flex justify-content-center buttonsList">
+                        <button type="submit" className="btn btn-outline-primary me-3">Yes</button>
+                        <button type="button" className="btn btn-outline-danger me-3 close-btn" onClick={closeSwal}>No</button>
+                    </div>
+                    
+                </form>
 
             </div>
         </div>
