@@ -100,9 +100,9 @@ const BookTable = () => {
                                     <div className=' form-text my-3'>
                                         <div class="mb-3 text-center text-dark">
                                             {
-                                                image !== undefined ? 
-                                                <img src={BASE_URL + `/${image}`} className="rounded-circle img-fluid" width="60" /> : 
-                                                <img src={account} width="60" className="img-fluid rounded-circle" />
+                                                image === undefined || image === ''? 
+                                                <img src={account} width="60" className="img-fluid rounded-circle" />:
+                                                <img src={BASE_URL + `/${image}`} className="rounded-circle img-fluid" width="60" />
                                             }
                                             
                                             <p className='h5 text-capitalize mt-3'>{name}</p>

@@ -34,6 +34,7 @@ const Login = () => {
                 localStorage.setItem('username', userdetails.username)
                 localStorage.setItem('email', userdetails.email)
                 localStorage.setItem('user_type', userdetails.user_type)
+                localStorage.setItem('user_image', userdetails.user_image)
                 dispatch({type: 'USER', payload: true})
                 dispatch2({type: 'USERTYPE', payload: userdetails.user_type})
                 navigate('/home')

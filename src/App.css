@@ -105,7 +105,7 @@ a {
   color: #004194 !important;
 }
 
-.add-table-card, .add-item-card {
+.add-table-card, .add-item-card, .profile-card {
   background: #ACC9DC;
   border: 0;
   border-radius: 1rem;

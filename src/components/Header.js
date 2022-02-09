@@ -2,6 +2,7 @@ import account from '../images/account.png'
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { UserContext, UserTypeContext } from "../App";
+import { BASE_URL } from '../utility/base_url';
 
 const Header = () => {
     const {state, dispatch} = useContext(UserContext);
@@ -77,11 +78,16 @@ const Header = () => {
         if (state) {
             const username = localStorage.getItem('username')
             const user_type = localStorage.getItem('user_type')
+            const user_image = localStorage.getItem('user_image')
             return(
                 <>
                     <div class="dropdown justify-content-end">
                         <a class="btn dropdown-toggle p-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src={account} className='img-fluid profile-icon dropdown-toggle' alt='user-profile' />
+                            {
+                                user_image === undefined || user_image === '' ? 
+                                <img src={account} className="img-fluid profile-icon dropdown-toggle" />:
+                                <img class="img-fluid profile-icon dropdown-toggle rounded-circle" src={BASE_URL + `/${user_image}`} width="60" alt="" />
+                            }
                         </a>
 
                         <ul class="dropdown-menu px-2 dropdown-menu-end" aria-labelledby="dropdownMenuLink">

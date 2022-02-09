@@ -43,9 +43,9 @@ const AvailableTables = () => {
                     
                     <div className="d-flex justify-content-center align-items-center">
                         {
-                            image !== undefined ? 
-                            <img src={BASE_URL + `/${image}`} className="img-fluid rounded-circle" width="60" /> : 
-                            <img src={account} width="60" className="img-fluid" />
+                            image === undefined || image === '' ? 
+                            <img src={account} width="60" className="img-fluid" />:
+                            <img src={BASE_URL + `/${image}`} className="img-fluid rounded-circle" width="60" />
                         }
                         <div className="align-items-center ms-3">
                             <p className="m-0">{name}</p>

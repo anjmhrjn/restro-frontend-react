@@ -68,9 +68,9 @@ const Restaurant = () => {
                                 {/* <div class="text-end"> <small>Full Time</small> </div> */}
                                 <div class="text-center mt-2 p-3"> 
                                     {
-                                        restro.user_image !== undefined ? 
-                                        <img src={BASE_URL + `/${restro.user_image}`} className="rounded-circle img-fluid" width="60" /> : 
-                                        <img src={account} width="60" className="img-fluid" />
+                                        restro.user_image === undefined || restro.user_image === '' ?
+                                        <img src={account} width="60" className="img-fluid" /> : 
+                                        <img src={BASE_URL + `/${restro.user_image}`} className="rounded-circle img-fluid" width="60" />
                                     }
                                      
                                     {/* <span class="d-block font-weight-bold">UX Designer</span> */}
