@@ -38,6 +38,12 @@ const Restaurant = () => {
             console.log(e)
         })
     }
+
+    const navigateToDetail = (e, rid) => {
+        e.preventDefault()
+        console.log(rid)
+        navigate(`/restaurant/${rid}`)
+    }
     
     return(
         <div className="pt-4 mt-5">
@@ -67,19 +73,21 @@ const Restaurant = () => {
                             <div class="card menu-card p-2" style={{width: "14rem"}}>
                                 {/* <div class="text-end"> <small>Full Time</small> </div> */}
                                 <div class="text-center mt-2 p-3"> 
-                                    {
-                                        restro.user_image === undefined || restro.user_image === '' ?
-                                        <img src={account} width="60" className="img-fluid" /> : 
-                                        <img src={BASE_URL + `/${restro.user_image}`} className="rounded-circle img-fluid" width="60" />
-                                    }
-                                     
-                                    {/* <span class="d-block font-weight-bold">UX Designer</span> */}
-                                    <hr/> 
-                                    <span>{restro.name}</span>
-                                    <div class="d-flex flex-row align-items-center justify-content-center"> 
-                                        <i class="fa fa-map-marker"></i> 
-                                        <small class="ms-2"> {restro.address}</small> 
-                                    </div>
+                                    <a onClick={(e) => navigateToDetail(e, restro._id)} href="#" className="text-dark">
+                                        {
+                                            restro.user_image === undefined || restro.user_image === '' ?
+                                            <img src={account} width="60" className="img-fluid" /> : 
+                                            <img src={BASE_URL + `/${restro.user_image}`} className="rounded-circle img-fluid" width="60" />
+                                        }
+                                        
+                                        {/* <span class="d-block font-weight-bold">UX Designer</span> */}
+                                        <hr/> 
+                                        <span>{restro.name}</span>
+                                        <div class="d-flex flex-row align-items-center justify-content-center"> 
+                                            <i class="fa fa-map-marker"></i> 
+                                            <small class="ms-2"> {restro.address}</small> 
+                                        </div>
+                                    </a>
                                     <div class="d-flex justify-content-center mt-3"> 
                                         {/* <span>$40,000</span>  */}
                                         <button type="button" onClick={(e) => {tableBtnClicked(restro._id)}} class="btn btn-sm btn-primary py-1">Tables</button> 

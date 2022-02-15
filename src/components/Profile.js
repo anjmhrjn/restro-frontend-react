@@ -18,6 +18,9 @@ const Profile = () => {
     const [gender, setGender] = useState('');
     const [user_image, setUserImage] = useState('');
     const [profile_pic, setProfilePic] = useState('');
+    const [opening_time, setOpeningTime] = useState('');
+    const [closing_time, setClosingTime] = useState('');
+    const [tags, setTags] = useState('');
     const [changed, setChanged] = useState(true);
     const navigate = useNavigate();
 
@@ -32,12 +35,16 @@ const Profile = () => {
         axios.get(get_url, getAxiosConfig())
         .then(result => {
             const data = result.data
+            console.log(data)
             setName(data.name)
             setBio(data.bio)
             setAddress(data.address)
             setPhone(data.phone)
             setGender(data.gender)
             setUserImage(data.user_image)
+            setTags(data.tags.join(','))
+            setClosingTime(data.closing_time)
+            setOpeningTime(data.opening_time)
         })
         .catch(e => {
             console.log(e)
@@ -46,10 +53,21 @@ const Profile = () => {
 
     const updateProfile = (e) => {
         e.preventDefault()
-        const userData = {name, bio, address, phone, gender}
+        const userData = {name, bio, address, phone}
+        if(user_type == 'Customer' || user_type == 'Admin') {
+            userData["gender"] = gender
+        }
+        if (user_type == 'Business') {
+            userData["opening_time"] = opening_time
+            userData["closing_time"] = closing_time
+            if (tags.length > 0) {
+                userData["tags"] = tags.split(",")
+            }
+            
+        }
 
         let submit_url = BASE_URL + `/profile/update/${username}`
-
+        console.log(userData)
         axios.put(submit_url, userData, getAxiosConfig())
         .then(result => {
             if (result.data.success) {
@@ -108,6 +126,11 @@ const Profile = () => {
     const handleSettingChange = () => {
         setProfileActive(false) 
         setSettingActive(true)
+    }
+
+    const handleBioChange = (e) => {
+        console.log(e.target.value)
+        setBio(e.target.value)
     }
 
     const changePassword = (e) => {
@@ -176,9 +199,9 @@ const Profile = () => {
                             {
                                 profileActive ? (
                                     <>
-                                        <h2 class="title">Profile</h2>
+                                        <h2 class="title px-3">Profile</h2>
                             
-                                        <form>
+                                        <form className="px-3">
                                             <h3 class="fieldset-title">Personal Info</h3>
                                             <hr className="hr-light" />
                                             <div class="form-group avatar row d-flex align-items-center mb-3">
@@ -200,9 +223,7 @@ const Profile = () => {
                                             </div>
                                             <hr/>
                                         </form>
-                                        <form class="form-horizontal">  
-                                            {/* <h3 class="fieldset-title">Personal Info</h3>
-                                            <hr className="hr-light" /> */}
+                                        <form class="form-horizontal px-3">  
                                             <fieldset class="fieldset text-dark"> 
                                                 <div class="form-group mb-3">
                                                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">
@@ -219,7 +240,7 @@ const Profile = () => {
                                                     <div class="col-md-10 col-sm-9 col-xs-12">
                                                     <textarea class="form-control px-4" rows="5" placeholder="Tell us about yourself"
                                                     value={bio}
-                                                    onChange={(e) => {setBio(e.target.value)}}>
+                                                    onChange={handleBioChange}>
                                                     </textarea>
                                                     </div>
                                                 </div>
@@ -267,6 +288,37 @@ const Profile = () => {
                                                             <label class="form-check-label" for="inlineRadio3">Other</label>
                                                         </div>
                                                     </div> :
+                                                    ''
+                                                }
+                                                {
+                                                    user_type === 'Business' ?
+                                                    <>
+                                                        <div class="form-group mb-3">
+                                                            <label class="col-md-2  col-sm-3 col-xs-12 control-label">Opening Time</label>
+                                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                                <input type="time" class="form-control" placeholder="Opening Time"
+                                                                value={opening_time}
+                                                                onChange={(e) => {setOpeningTime(e.target.value)}}/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label class="col-md-2  col-sm-3 col-xs-12 control-label">Closing Time</label>
+                                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                                <input type="time" class="form-control" placeholder="Closing Time"
+                                                                value={closing_time}
+                                                                onChange={(e) => {setClosingTime(e.target.value)}}/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label class="col-md-2  col-sm-3 col-xs-12 control-label">Tags</label>
+                                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                                <input type="text" class="form-control" placeholder="Your Tags"
+                                                                value={tags}
+                                                                onChange={(e) => {setTags(e.target.value)}}/>
+                                                                <small><em>*Separate each tag by comma</em></small>
+                                                            </div>
+                                                        </div>
+                                                    </> :
                                                     ''
                                                 }
                                                 

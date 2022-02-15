@@ -5,6 +5,8 @@ import Mid from './components/Mid';
 import { createContext, useReducer } from 'react';
 import { initialState, reducer, userTypeReducer } from './reducer/UseReducer';
 import { ToastContainer } from 'react-toastify';
+import Footer from './components/Footer';
+import './utility/footer.css';
 
 export const UserContext = createContext();
 export const UserTypeContext = createContext();
@@ -20,6 +22,7 @@ function App() {
             <Header/>
             <ToastContainer/>
             <Mid/>
+            <Footer/>
           </BrowserRouter>
         </UserTypeContext.Provider>
       </UserContext.Provider>

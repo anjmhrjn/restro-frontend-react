@@ -23,6 +23,7 @@ import BookTable from "./customer/BookTable"
 import MyBooking from "./customer/MyBooking"
 import UpdateBooking from "./customer/UpdateBooking"
 import PrivateRoute from './ProtectedRoute'
+import RestroProfile from "./customer/RestroProfile"
 
 const Mid = () => {
     return (
@@ -55,6 +56,7 @@ const Mid = () => {
                 <Route path="/table/:tid/book" element={<BookTable/>} />
                 <Route path="/my-bookings" element={<MyBooking/>} />
                 <Route path="/booking/:bid/update" element={<UpdateBooking/>} />
+                <Route path="/restaurant/:rid" element={<RestroProfile/>} />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>

@@ -79,12 +79,13 @@ const Header = () => {
             const username = localStorage.getItem('username')
             const user_type = localStorage.getItem('user_type')
             const user_image = localStorage.getItem('user_image')
+            console.log(typeof user_image)
             return(
                 <>
                     <div class="dropdown justify-content-end">
                         <a class="btn dropdown-toggle p-0" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             {
-                                user_image === undefined || user_image === '' ? 
+                                user_image == undefined || user_image === '' || user_image == 'undefined'? 
                                 <img src={account} className="img-fluid profile-icon dropdown-toggle" />:
                                 <img class="img-fluid profile-icon dropdown-toggle rounded-circle" src={BASE_URL + `/${user_image}`} width="60" alt="" />
                             }
