@@ -21,6 +21,12 @@ const Profile = () => {
     const [changed, setChanged] = useState(true);
     const navigate = useNavigate();
 
+    const [profileActive, setProfileActive] = useState(true);
+    const [settingActive, setSettingActive] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
     useEffect(() => {
         const get_url = BASE_URL + `/user-profile/${userId}`
         axios.get(get_url, getAxiosConfig())
@@ -94,6 +100,50 @@ const Profile = () => {
         })
     }
 
+    const handleProfileChange = () => {
+        setProfileActive(true) 
+        setSettingActive(false)
+    }
+
+    const handleSettingChange = () => {
+        setProfileActive(false) 
+        setSettingActive(true)
+    }
+
+    const changePassword = (e) => {
+        e.preventDefault()
+        if (newPassword !== confirmPassword) {
+            toast.error('Password does not match', {
+                hideProgressBar: true
+            });
+        } else {
+            let data = {oldPassword, newPassword}
+            let submit_url = BASE_URL + '/change-password'
+
+            axios.put(submit_url, data, getAxiosConfig())
+            .then(result => {
+                if (result.data.success) {
+                    toast.success(result.data.message, {
+                        hideProgressBar: true
+                    });
+                    navigate('/logout')              
+                } else {
+                    toast.error(result.data.message, {
+                        hideProgressBar: true
+                    });
+                }
+            })
+            .catch(err => {
+                toast.error(err.response.data.message, {
+                    hideProgressBar: true
+                });
+            })
+        }
+
+        
+        
+    }
+
     return(
         <div class="container mt-5 pt-5 ">
             <div class="view-account">
@@ -117,114 +167,161 @@ const Profile = () => {
                             </div>
                             <nav class="side-menu">
                                 <ul class="nav">
-                                    <li class="active"><a href="#"><span class="fa fa-user"></span> Profile</a></li>
-                                    <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li>
+                                    <li class={profileActive ? "active": ""} onClick={handleProfileChange}><a href="#"><span class="fa fa-user"></span> Profile</a></li>
+                                    <li className={settingActive ? "active": ""} onClick={handleSettingChange}><a href="#"><span class="fa fa-cog"></span> Settings</a></li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="content-panel">
-                            <h2 class="title">Profile</h2>
+                            {
+                                profileActive ? (
+                                    <>
+                                        <h2 class="title">Profile</h2>
                             
-                            <form>
-                                <h3 class="fieldset-title">Personal Info</h3>
-                                <hr className="hr-light" />
-                                <div class="form-group avatar row d-flex align-items-center mb-3">
-                                    <figure class="figure col-md-2 col-sm-3 col-xs-12 d-flex justify-content-start">
-                                        {
-                                            user_image === undefined || user_image === '' ? 
-                                            <img src={account} width="60" className="img-fluid" />:
-                                            <img class="rounded-circle img-responsive" src={BASE_URL + `/${user_image}`} alt="" />
-                                        }
-                                    </figure>
-                                    <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                                        <input type="file" class="pull-left" onChange={(e) => setProfilePic(e.target.files[0])}/>
-                                        
-                                    </div>
-                                    <div className="col-md-2 col-sm-3 col-xs-12 my-2">
-                                        <button type="submit" class="btn btn-sm btn-secondary py-1 px-2" onClick={changeProfilePic}>Update Image</button>
-                                    </div>
-                                    
-                                </div>
-                                <hr/>
-                            </form>
-                            <form class="form-horizontal">  
-                                {/* <h3 class="fieldset-title">Personal Info</h3>
-                                <hr className="hr-light" /> */}
-                                <fieldset class="fieldset text-dark"> 
-                                    <div class="form-group mb-3">
-                                        <label class="col-md-2 col-sm-3 col-xs-12 control-label">
-                                            {user_type === 'Business' ? 'Restaurant Name' : 'Full Name'}
-                                        </label>
-                                        <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" placeholder=""
-                                            value={name}
-                                            onChange={(e) => {setName(e.target.value)}}/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="col-md-2 col-sm-3 col-xs-12 control-label">Bio</label>
-                                        <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <textarea class="form-control px-4" rows="5" placeholder="Tell us about yourself"
-                                        value={bio}
-                                        onChange={(e) => {setBio(e.target.value)}}>
-                                        </textarea>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset class="fieldset text-dark">
-                                    <div class="form-group mb-3">
-                                        <label class="col-md-2  col-sm-3 col-xs-12 control-label">Address</label>
-                                        <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" placeholder="Address"
-                                            value={address}
-                                            onChange={(e) => {setAddress(e.target.value)}}/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="col-md-2  col-sm-3 col-xs-12 control-label">Contact</label>
-                                        <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="number" class="form-control" placeholder="Contact Number"
-                                            value={phone}
-                                            onChange={(e) => {setPhone(e.target.value)}}/>
-                                        </div>
-                                    </div>
-                                    {
-                                        user_type === 'Customer' ?
+                                        <form>
+                                            <h3 class="fieldset-title">Personal Info</h3>
+                                            <hr className="hr-light" />
+                                            <div class="form-group avatar row d-flex align-items-center mb-3">
+                                                <figure class="figure col-md-2 col-sm-3 col-xs-12 d-flex justify-content-start">
+                                                    {
+                                                        user_image === undefined || user_image === '' ? 
+                                                        <img src={account} width="60" className="img-fluid" />:
+                                                        <img class="rounded-circle img-responsive" src={BASE_URL + `/${user_image}`} alt="" />
+                                                    }
+                                                </figure>
+                                                <div class="form-inline col-md-10 col-sm-9 col-xs-12">
+                                                    <input type="file" class="pull-left" onChange={(e) => setProfilePic(e.target.files[0])}/>
+                                                    
+                                                </div>
+                                                <div className="col-md-2 col-sm-3 col-xs-12 my-2">
+                                                    <button type="submit" class="btn btn-sm btn-secondary py-1 px-2" onClick={changeProfilePic}>Update Image</button>
+                                                </div>
+                                                
+                                            </div>
+                                            <hr/>
+                                        </form>
+                                        <form class="form-horizontal">  
+                                            {/* <h3 class="fieldset-title">Personal Info</h3>
+                                            <hr className="hr-light" /> */}
+                                            <fieldset class="fieldset text-dark"> 
+                                                <div class="form-group mb-3">
+                                                    <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                                        {user_type === 'Business' ? 'Restaurant Name' : 'Full Name'}
+                                                    </label>
+                                                    <div class="col-md-10 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" placeholder=""
+                                                        value={name}
+                                                        onChange={(e) => {setName(e.target.value)}}/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="col-md-2 col-sm-3 col-xs-12 control-label">Bio</label>
+                                                    <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <textarea class="form-control px-4" rows="5" placeholder="Tell us about yourself"
+                                                    value={bio}
+                                                    onChange={(e) => {setBio(e.target.value)}}>
+                                                    </textarea>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="fieldset text-dark">
+                                                <div class="form-group mb-3">
+                                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Address</label>
+                                                    <div class="col-md-10 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" placeholder="Address"
+                                                        value={address}
+                                                        onChange={(e) => {setAddress(e.target.value)}}/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Contact</label>
+                                                    <div class="col-md-10 col-sm-9 col-xs-12">
+                                                        <input type="number" class="form-control" placeholder="Contact Number"
+                                                        value={phone}
+                                                        onChange={(e) => {setPhone(e.target.value)}}/>
+                                                    </div>
+                                                </div>
+                                                {
+                                                    user_type === 'Customer' ?
+                                                    <div class="form-group mb-3">
+                                                        <label class="col-md-2  col-sm-3 col-xs-12 control-label d-block">Gender</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" 
+                                                            value="Male" 
+                                                            checked={gender === "Male"}
+                                                            onChange={(e) => setGender(e.target.value)}/>
+                                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" 
+                                                            value="Female" 
+                                                            checked={gender === "Female"}
+                                                            onChange={(e) => setGender(e.target.value)}/>
+                                                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio3" 
+                                                            value="Other" 
+                                                            checked={gender === "Other"}
+                                                            onChange={(e) => setGender(e.target.value)}/>
+                                                            <label class="form-check-label" for="inlineRadio3">Other</label>
+                                                        </div>
+                                                    </div> :
+                                                    ''
+                                                }
+                                                
+                                            </fieldset>
+                                            <div class="form-group mb-3">
+                                                <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                                    <button className="btn btn-primary" onClick={updateProfile}>Submit</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </>
+                                ) : <>
+                                    <form class="form-horizontal">  
+                                        <h3 class="fieldset-title">Change Password</h3>
+                                        <hr className="hr-light" />
+                                        <fieldset class="fieldset text-dark"> 
+                                            <div class="form-group mb-3">
+                                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Old Password
+                                                </label>
+                                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <input type="password" class="form-control" placeholder=""
+                                                    onChange={(e) => {setOldPassword(e.target.value)}}/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    New Password
+                                                </label>
+                                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <input type="password" class="form-control" placeholder=""
+                                                    onChange={(e) => {setNewPassword(e.target.value)}}/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Change Password
+                                                </label>
+                                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                                    <input type="password" class="form-control" placeholder=""
+                                                    onChange={(e) => {setConfirmPassword(e.target.value)}}/>
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                         <div class="form-group mb-3">
-                                            <label class="col-md-2  col-sm-3 col-xs-12 control-label d-block">Gender</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" 
-                                                value="Male" 
-                                                checked={gender === "Male"}
-                                                onChange={(e) => setGender(e.target.value)}/>
-                                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                                <button className="btn btn-primary" onClick={changePassword}>Submit</button>
+                                                
                                             </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" 
-                                                value="Female" 
-                                                checked={gender === "Female"}
-                                                onChange={(e) => setGender(e.target.value)}/>
-                                                <label class="form-check-label" for="inlineRadio2">Female</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio3" 
-                                                value="Other" 
-                                                checked={gender === "Other"}
-                                                onChange={(e) => setGender(e.target.value)}/>
-                                                <label class="form-check-label" for="inlineRadio3">Other</label>
-                                            </div>
-                                        </div> :
-                                        ''
-                                    }
-                                    
-                                </fieldset>
-                                <div class="form-group mb-3">
-                                    <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                        <button className="btn btn-primary" onClick={updateProfile}>Submit</button>
-                                        
-                                    </div>
-                                </div>
-                            </form>
+                                        </div>
+                                    </form>
+                                </> 
+                            }
+                            
                         </div>
                     </div>
                 </section>

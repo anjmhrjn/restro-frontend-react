@@ -21,6 +21,7 @@ const ShowBooking = () => {
         const get_url = BASE_URL + '/business/my-booking'
         axios.get(get_url, getAxiosConfig())
         .then(result => {
+            console.log(result)
             setBdata(result.data)
         })
         .catch(e => {
@@ -126,7 +127,7 @@ const ShowBooking = () => {
         })
         .catch(e => {
             console.log(e)
-            toast.error('Unable to delete', {
+            toast.error('No result found', {
                 hideProgressBar: true
             });
         })

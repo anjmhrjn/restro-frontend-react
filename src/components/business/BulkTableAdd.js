@@ -17,7 +17,6 @@ const BulkTableAdd = () => {
         let validated = true;
         let check_number;
         table_list.forEach((num) => {
-            console.log(typeof Number(num))
             if (isNaN(Number(num))) {
                 validated = false;
             }

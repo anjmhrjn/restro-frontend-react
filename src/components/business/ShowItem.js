@@ -104,8 +104,8 @@ const ShowItem = () => {
                                                 <div className="menu-thumbnail mb-2">
                                                     {
                                                         item.images !== '' ? 
-                                                        <img src={BASE_URL + `/${item.images}`} className="img-fluid"/> : 
-                                                        <img src={empty} className="img-fluid"/>
+                                                        <img src={BASE_URL + `/${item.images}`} className="img-fluid rounded"/> : 
+                                                        <img src={empty} className="img-fluid rounded"/>
                                                     }
                                                     
                                                 </div>

@@ -22,6 +22,7 @@ import AvailableTables from "./customer/AvailableTables"
 import BookTable from "./customer/BookTable"
 import MyBooking from "./customer/MyBooking"
 import UpdateBooking from "./customer/UpdateBooking"
+import PrivateRoute from './ProtectedRoute'
 
 const Mid = () => {
     return (
@@ -31,7 +32,12 @@ const Mid = () => {
                 <Route path="/register" element={<Register/>} />
                 <Route path="/home" element={<Dashboard/>} />
                 <Route path="/profile" element={<Profile/>} />
-                <Route path="/table-add" element={<TableAdd/>} />
+                <Route path="/table-add" 
+                element={
+                    <PrivateRoute> 
+                        <TableAdd/>
+                    </PrivateRoute> 
+                } />
                 <Route path="/bulk-table-add" element={<BulkTableAdd/>} />
                 <Route path="/my-tables" element={<MyTables/>} />
                 <Route path="/add-item" element={<AddItem/>} />
