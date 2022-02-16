@@ -29,7 +29,6 @@ const AvailableTables = () => {
     }, [])
 
     const handleBookTable = (tid) => {
-        console.log(tid)
         navigate(`/table/${tid}/book`)
     }
 

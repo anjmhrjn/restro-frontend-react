@@ -13,10 +13,8 @@ const Dashboard = () => {
 
     useEffect(() => {
         const get_url = BASE_URL + '/dashboard-data'
-        console.log(get_url)
         axios.get(get_url, getAxiosConfig())
         .then(result => {
-            console.log(result.data)
             setTotalBooking(result.data.total_booking)
             setTotalRestaurants(result.data.total_restaurants)
             setTotalTables(result.data.total_tables)

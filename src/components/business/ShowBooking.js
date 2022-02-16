@@ -21,7 +21,6 @@ const ShowBooking = () => {
         const get_url = BASE_URL + '/business/my-booking'
         axios.get(get_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
             setBdata(result.data)
         })
         .catch(e => {
@@ -68,7 +67,6 @@ const ShowBooking = () => {
         axios.put(submit_url, booking_data, getAxiosConfig())
         .then(result => {
             if (result.data.success) {
-                console.log(result.data.success)
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });
@@ -115,7 +113,6 @@ const ShowBooking = () => {
         
         axios.post(submit_url, booking_data, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if(result.data.length > 0) {
                 setBdata(result.data)
             } else {

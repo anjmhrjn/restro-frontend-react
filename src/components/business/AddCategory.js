@@ -15,7 +15,6 @@ const AddCategory = () => {
         let add_url = BASE_URL + '/category/add'
         axios.post(add_url, catData, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if (result.data.data) {
                 toast.success(result.data.message, {
                     hideProgressBar: true

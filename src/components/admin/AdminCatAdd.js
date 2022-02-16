@@ -15,7 +15,6 @@ const AdminCatAdd = () => {
         let add_url = BASE_URL + '/category/add'
         axios.post(add_url, catData, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if (result.data.success) {
                 document.getElementById("CategoryForm").reset();
                 toast.success(result.data.message, {

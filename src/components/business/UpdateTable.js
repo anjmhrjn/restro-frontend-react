@@ -36,12 +36,9 @@ const UpdateTable = () => {
     const updateTable = (e) => {
         e.preventDefault();
         const tableData = {min_capacity, max_capacity, table_number, tableOf, isAvailable}
-        console.log(tableData)
         let put_url = BASE_URL + `/table/update/${tid}`
-        console.log(put_url)
         axios.put(put_url, tableData, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if (result.data.success) {
                 toast.success(result.data.message, {
                     hideProgressBar: true

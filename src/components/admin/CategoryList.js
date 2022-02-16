@@ -54,10 +54,10 @@ const CategoryList = () => {
     const delSubmit = (e) => {
         e.preventDefault()
         let del_url = e.target.getAttribute('data-submit-url')
+        console.log(del_url)
         axios.delete(del_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
-            if (result.data.success) {
+            if (result.status == 204) {
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });

@@ -24,7 +24,6 @@ const BulkTableAdd = () => {
 
         if (validated) {
             const tableData = {min_capacity, max_capacity, table_number, tableOf};
-            console.log(tableData)
             const submit_url = BASE_URL+"/table/bulk/add"
 
             axios.post(submit_url, tableData, getAxiosConfig())

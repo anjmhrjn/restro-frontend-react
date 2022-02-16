@@ -18,12 +18,10 @@ const Register = () => {
     const userRegister = (e) => {
         e.preventDefault();
         const userData = {username, email, user_type, password};
-        console.log(userData)
         const submit_url = BASE_URL+"/user/register"
 
         axios.post(submit_url, userData)
         .then(result => {
-            console.log(result)
             if (result.data.success) {
                 document.getElementById("RegisterForm").reset();
                 toast.success(result.data.message, {

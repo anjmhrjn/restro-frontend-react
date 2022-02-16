@@ -35,7 +35,6 @@ const Profile = () => {
         axios.get(get_url, getAxiosConfig())
         .then(result => {
             const data = result.data
-            console.log(data)
             setName(data.name)
             setBio(data.bio)
             setAddress(data.address)
@@ -67,7 +66,6 @@ const Profile = () => {
         }
 
         let submit_url = BASE_URL + `/profile/update/${username}`
-        console.log(userData)
         axios.put(submit_url, userData, getAxiosConfig())
         .then(result => {
             if (result.data.success) {
@@ -129,7 +127,6 @@ const Profile = () => {
     }
 
     const handleBioChange = (e) => {
-        console.log(e.target.value)
         setBio(e.target.value)
     }
 

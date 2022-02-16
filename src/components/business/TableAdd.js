@@ -16,7 +16,6 @@ const TableAdd = () => {
         
         
         const tableData = {min_capacity, max_capacity, table_number, tableOf};
-        console.log(tableData)
         const submit_url = BASE_URL+"/table/add"
 
         axios.post(submit_url, tableData, getAxiosConfig())

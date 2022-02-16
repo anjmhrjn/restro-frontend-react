@@ -22,7 +22,6 @@ const MyBooking = () => {
         const get_url = BASE_URL + '/my-bookings'
         axios.get(get_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
             setBdata(result.data)
         })
         .catch(e => {
@@ -53,7 +52,6 @@ const MyBooking = () => {
         
         axios.post(submit_url, booking_data, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if(result.data.length > 0) {
                 setBdata(result.data)
             } else {
@@ -72,7 +70,6 @@ const MyBooking = () => {
     }
 
     const redirectToForm = (id) => {
-        console.log(id)
         navigate(`/booking/${id}/update`)
     }
 
@@ -104,7 +101,6 @@ const MyBooking = () => {
         let del_url = e.target.getAttribute('data-submit-url')
         axios.delete(del_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if (result.data.success) {
                 toast.success(result.data.message, {
                     hideProgressBar: true

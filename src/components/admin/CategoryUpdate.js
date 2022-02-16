@@ -13,12 +13,10 @@ const CategoryUpdate = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(cid)
         const get_url = BASE_URL + `/category/${cid}`
         axios.get(get_url, getAxiosConfig())
         .then(result => {
             const data = result.data 
-            console.log(data)
             setName(data.name)
         })
         .catch(e => {

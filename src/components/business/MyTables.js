@@ -59,7 +59,6 @@ const MyTables = () => {
         let del_url = e.target.getAttribute('data-submit-url')
         axios.delete(del_url, getAxiosConfig())
         .then(result => {
-            console.log(result)
             if (result.data.success) {
                 toast.success(result.data.message, {
                     hideProgressBar: true

@@ -41,7 +41,6 @@ const Restaurant = () => {
 
     const navigateToDetail = (e, rid) => {
         e.preventDefault()
-        console.log(rid)
         navigate(`/restaurant/${rid}`)
     }
     

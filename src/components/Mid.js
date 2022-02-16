@@ -16,7 +16,6 @@ import BulkTableAdd from "./business/BulkTableAdd"
 import CategoryList from "./admin/CategoryList"
 import CategoryUpdate from "./admin/CategoryUpdate"
 import AdminCatAdd from "./admin/AdminCatAdd"
-import FormValidation from "./FormValidation"
 import Restaurant from "./customer/Restaurant"
 import AvailableTables from "./customer/AvailableTables"
 import BookTable from "./customer/BookTable"
@@ -128,10 +127,6 @@ const Mid = () => {
                     <AdmminRoute> 
                         <CategoryUpdate/>
                     </AdmminRoute>
-                } />
-                <Route path="/form-validation" 
-                element={
-                <FormValidation/>
                 } />
                 {/* Customer Route */}
                 <Route path="/all-restaurants" 

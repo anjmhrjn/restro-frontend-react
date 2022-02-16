@@ -31,7 +31,6 @@ const BookTable = () => {
         axios.get(get_url, getAxiosConfig())
         .then(result => {
             const data = result.data
-            console.log(data)
             setName(data.user_detail.name)
             setAddress(data.user_detail.address)
             setImage(data.user_detail.user_image)

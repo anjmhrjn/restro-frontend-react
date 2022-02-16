@@ -38,7 +38,6 @@ const UpdateItem = () => {
             })
             setSelected(selectedCatValues)
             
-            console.log(currentImage === '')
         })
         .catch(e => {
             console.log(e)
@@ -71,7 +70,6 @@ const UpdateItem = () => {
         })
 
         const itemData = {name, categories: category_list, price, description}
-        console.log(itemData)
         axios.put(BASE_URL + `/item/update/${iid}`, itemData, getAxiosConfig())
         .then(result => {
             if (result.data.success) {

@@ -90,7 +90,6 @@ const Header = () => {
             const username = localStorage.getItem('username')
             const user_type = localStorage.getItem('user_type')
             const user_image = localStorage.getItem('user_image')
-            console.log(typeof user_image)
             return(
                 <>
                     <div class="dropdown justify-content-end">

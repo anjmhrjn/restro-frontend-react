@@ -7,6 +7,12 @@ import { initialState, reducer, userTypeReducer } from './reducer/UseReducer';
 import { ToastContainer } from 'react-toastify';
 import Footer from './components/Footer';
 import './utility/footer.css';
+import './utility/cards.css';
+import './utility/formInput.css';
+import './utility/header.css';
+import './utility/scrollbar.css';
+import './utility/table.css';
+import './utility/updateForm.css';
 
 export const UserContext = createContext();
 export const UserTypeContext = createContext();
