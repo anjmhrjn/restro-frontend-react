@@ -134,7 +134,7 @@ const ShowBooking = () => {
     }
 
     return(
-        <div className="mt-5 pt-4">
+        <div className="my-5 pt-4">
             <section className="container-fluid bg-secondary">
                 <div className="text-center py-3">
                     <p className="fs-1 fw-bold">Bookings</p>

@@ -1,4 +1,4 @@
-import register from '../images/register.svg'
+import register_image from '../images/register_image.svg'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
@@ -49,13 +49,13 @@ const Register = () => {
     }
 
     return (
-        <div className="container px-5 pt-5 mt-5">
+        <div className="container px-5 my-5 pt-5 ">
             {/* <ToastContainer/> */}
-            <div class="card signin-card" style={{background: '#EE6A3E'}}>
+            <div class="card signin-card my-5" style={{background: '#EE6A3E'}}>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-5 d-none d-md-flex">
-                            <img src={register} className='register-img img-fluid rounded' alt='Register'></img>
+                            <img src={register_image} className='register-img img-fluid rounded' alt='Register'></img>
                         </div>
                         <div class="col-md-7 ps-md-5 mx-auto">
                             <div className='row'>

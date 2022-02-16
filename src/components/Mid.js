@@ -22,41 +22,155 @@ import AvailableTables from "./customer/AvailableTables"
 import BookTable from "./customer/BookTable"
 import MyBooking from "./customer/MyBooking"
 import UpdateBooking from "./customer/UpdateBooking"
-import PrivateRoute from './ProtectedRoute'
+import PrivateRoute, { AdmminRoute, AuthenticatedRoute, BusinessRoute, CustomerRoute } from './ProtectedRoute'
 import RestroProfile from "./customer/RestroProfile"
+import Home from "./Home"
 
 const Mid = () => {
     return (
         <div className="">
             <Routes>
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/home" element={<Dashboard/>} />
-                <Route path="/profile" element={<Profile/>} />
+                <Route path="/" element={<Home/>} />
+                <Route path="/login" 
+                element={
+                    <AuthenticatedRoute>
+                        <Login/>
+                    </AuthenticatedRoute>
+                } />
+                <Route path="/register"
+                element={
+                    <AuthenticatedRoute>
+                        <Register/>
+                    </AuthenticatedRoute>
+                } />
+                <Route path="/home" 
+                element={
+                    <PrivateRoute>
+                        <Dashboard/>
+                    </PrivateRoute>
+                } />
+                <Route path="/profile" 
+                element={
+                    <PrivateRoute>
+                        <Profile/>
+                    </PrivateRoute>
+                } />
+                {/* Business routes */}
                 <Route path="/table-add" 
                 element={
-                    <PrivateRoute> 
+                    <BusinessRoute> 
                         <TableAdd/>
-                    </PrivateRoute> 
+                    </BusinessRoute> 
                 } />
-                <Route path="/bulk-table-add" element={<BulkTableAdd/>} />
-                <Route path="/my-tables" element={<MyTables/>} />
-                <Route path="/add-item" element={<AddItem/>} />
-                <Route path="/my-items" element={<ShowItem/>} />
-                <Route path="/my-items/update/:iid" element={<UpdateItem/>} />
-                <Route path="/show-bookings" element={<ShowBooking/>} />
-                <Route path="/add-category" element={<AddCategory/>} />
-                <Route path="/my-tables/update/:tid" element={<UpdateTable/>} />
-                <Route path="/category-list" element={<CategoryList/>} />
-                <Route path="/admin/add-category" element={<AdminCatAdd/>} />
-                <Route path="/admin/update-category/:cid" element={<CategoryUpdate/>} />
-                <Route path="/form-validation" element={<FormValidation/>} />
-                <Route path="/all-restaurants" element={<Restaurant/>} />
-                <Route path="/:rid/available-tables" element={<AvailableTables/>} />
-                <Route path="/table/:tid/book" element={<BookTable/>} />
-                <Route path="/my-bookings" element={<MyBooking/>} />
-                <Route path="/booking/:bid/update" element={<UpdateBooking/>} />
-                <Route path="/restaurant/:rid" element={<RestroProfile/>} />
+                <Route path="/bulk-table-add" 
+                element={
+                    <BusinessRoute> 
+                        <BulkTableAdd/>
+                    </BusinessRoute> 
+                } />
+                <Route path="/my-tables" 
+                element={
+                    <BusinessRoute> 
+                        <MyTables/>
+                    </BusinessRoute>
+                } />
+                <Route path="/add-item" 
+                element={
+                    <BusinessRoute> 
+                        <AddItem/>
+                    </BusinessRoute>
+                } />
+                <Route path="/my-items" 
+                element={
+                    <BusinessRoute> 
+                        <ShowItem/>
+                    </BusinessRoute>
+                } />
+                <Route path="/my-items/update/:iid" 
+                element={
+                    <BusinessRoute> 
+                        <UpdateItem/>
+                    </BusinessRoute>
+                } />
+                <Route path="/show-bookings" 
+                element={
+                    <BusinessRoute> 
+                        <ShowBooking/>
+                    </BusinessRoute>
+                } />
+                <Route path="/add-category" 
+                element={
+                    <BusinessRoute> 
+                        <AddCategory/>
+                    </BusinessRoute>
+                } />
+                <Route path="/my-tables/update/:tid" 
+                element={
+                    <BusinessRoute> 
+                        <UpdateTable/>
+                    </BusinessRoute>
+                } />
+                {/* Admin Routes */}
+                <Route path="/category-list" 
+                element={
+                    <AdmminRoute> 
+                        <CategoryList/>
+                    </AdmminRoute>
+                } />
+                <Route path="/admin/add-category" 
+                element={
+                    <AdmminRoute> 
+                        <AdminCatAdd/>
+                    </AdmminRoute>
+                } />
+                <Route path="/admin/update-category/:cid" 
+                element={
+                    <AdmminRoute> 
+                        <CategoryUpdate/>
+                    </AdmminRoute>
+                } />
+                <Route path="/form-validation" 
+                element={
+                <FormValidation/>
+                } />
+                {/* Customer Route */}
+                <Route path="/all-restaurants" 
+                element={
+                    <CustomerRoute> 
+                        <Restaurant/>
+                    </CustomerRoute>
+                
+                } />
+                <Route path="/:rid/available-tables" 
+                element={
+                    <CustomerRoute> 
+                        <AvailableTables/>
+                    </CustomerRoute>
+                } />
+                <Route path="/table/:tid/book" 
+                element={
+                    <CustomerRoute> 
+                        <BookTable/>
+                    </CustomerRoute>
+                } />
+                <Route path="/my-bookings" 
+                element={
+                    <CustomerRoute> 
+                        <MyBooking/>
+                    </CustomerRoute>
+                } />
+                <Route path="/booking/:bid/update" 
+                element={
+                    <CustomerRoute> 
+                        <UpdateBooking/>
+                    </CustomerRoute>
+                } />
+                <Route path="/restaurant/:rid" 
+                element={
+                    <CustomerRoute> 
+                        <RestroProfile/>
+                    </CustomerRoute>
+                } />
                 <Route path="/logout" element={<Logout/>} />
             </Routes>
         </div>

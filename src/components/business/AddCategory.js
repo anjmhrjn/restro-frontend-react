@@ -45,7 +45,7 @@ const AddCategory = () => {
     }
 
     return(
-        <div className="container mt-5 pt-5">
+        <div className="container my-5 pt-5">
             <div className="row">
                 <div className="col-lg-7 col-md-8 col-sm-9 mx-auto">
                     <div className="card">

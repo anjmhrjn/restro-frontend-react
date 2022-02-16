@@ -27,6 +27,49 @@ const Dashboard = () => {
     
 
     }, [])
+
+    const RenderAdminContent = () => {
+        
+        return (
+            <>
+                <div class="col-xl-6 col-lg-12">
+                        
+                        <div class="card l-bg-cherry">
+                            <div class="card-statistic-3 p-4">
+                                <div class="card-icon card-icon-large pr-3"><i class="fas fa-users"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Total Restaurants</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-8">
+                                        <h2 class="d-flex align-items-center mb-0">
+                                            {total_restaurants}
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card l-bg-blue-dark">
+                            <div class="card-statistic-3 p-4">
+                                <div class="card-icon card-icon-large pr-3"><i class="fas fa-ticket-alt"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">Total Tables</h5>
+                                </div>
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-8">
+                                        <h2 class="d-flex align-items-center mb-0">
+                                            {total_tables}
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+            </>
+        )
+    }
     
 
     const RenderBusinessContent = () => {
@@ -56,7 +99,7 @@ const Dashboard = () => {
                             <div class="card-statistic-3 p-4">
                                 <div class="card-icon card-icon-large pr-3"><i class="fas fa-ticket-alt"></i></div>
                                 <div class="mb-4">
-                                    <h5 class="card-title mb-0">Total Tables</h5>
+                                    <h5 class="card-title mb-0">My Tables</h5>
                                 </div>
                                 <div class="row align-items-center mb-2 d-flex">
                                     <div class="col-8">
@@ -125,7 +168,7 @@ const Dashboard = () => {
             <div className="container mt-4 pt-4">
                 <div className="row">
                     {state2 == 'Customer' ? 
-                    RenderCustomerContent() : RenderBusinessContent()}
+                    RenderCustomerContent() : (state2 == 'Business' ? RenderBusinessContent() : RenderAdminContent())}
 
                 </div>
 
