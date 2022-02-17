@@ -45,7 +45,7 @@ const TableAdd = () => {
     }
 
     return(
-        <div className="container mt-5 pt-5">
+        <div className="container my-5 pt-5">
             <div className="row">
                 <div className="col-sm-9 col-md-8 col-lg-6 mx-auto">
                     <div className="card add-table-card my-5">

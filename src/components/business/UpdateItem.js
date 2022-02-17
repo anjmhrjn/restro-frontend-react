@@ -138,7 +138,7 @@ const UpdateItem = () => {
     }
 
     return(
-        <div className="container mt-5 pt-5">
+        <div className="container my-5 pt-5">
             <div className="row">
                 <div className="col-sm-12 col-lg-10 mx-auto">
                     <div className="card add-item-card my-5">

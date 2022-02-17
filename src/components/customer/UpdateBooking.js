@@ -73,7 +73,7 @@ const UpdateBooking = () => {
     }
 
     return(
-        <div className="mt-5 pt-5">
+        <div className="my-5 pt-5">
             <div className="row">
                 <div className="col-lg-7 px-4 mx-auto">
                     <div className="card add-item-card p-3">

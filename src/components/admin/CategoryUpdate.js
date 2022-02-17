@@ -54,7 +54,7 @@ const CategoryUpdate = () => {
     }
 
     return(
-        <div className="container mt-5 pt-5">
+        <div className="container my-5 pt-5">
             <div className="card col-md-8 mx-auto">
                 <div className="card-body">
                     <h2 className="text-center">Update Category</h2>

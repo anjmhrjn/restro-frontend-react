@@ -45,7 +45,7 @@ const Restaurant = () => {
     }
     
     return(
-        <div className="pt-4 mt-5">
+        <div className="pt-4 my-5">
             <section className="container-fluid bg-secondary">
                 <div className="text-center py-3">
                     <p className="fs-1 fw-bold">Restaurants</p>

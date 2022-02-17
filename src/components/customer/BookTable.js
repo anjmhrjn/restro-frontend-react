@@ -89,7 +89,7 @@ const BookTable = () => {
     }
 
     return(
-        <div className="mt-5 pt-5 container">
+        <div className="my-5 pt-5 container">
             <div className="row">
                 <div className="col-lg-9 mx-auto">
                     <div className="card add-item-card p-3">

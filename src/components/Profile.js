@@ -165,7 +165,7 @@ const Profile = () => {
     }
 
     return(
-        <div class="container mt-5 pt-5 ">
+        <div class="container my-5 pt-5 ">
             <div class="view-account">
                 <section class="module">
                     <div class="module-inner">

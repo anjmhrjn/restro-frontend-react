@@ -26,7 +26,7 @@ const RestroProfile = () => {
     }, [])
 
     return(
-        <div className="mt-5 pt-4">
+        <div className="my-5 pt-4">
             <section className="bg-secondary container-fluid">
                 <div className="container py-5">
                     <div className="text-center text-md-start d-md-flex align-items-center">
