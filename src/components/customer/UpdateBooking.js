@@ -21,8 +21,14 @@ const UpdateBooking = () => {
             const data = result.data
             const st_time = new Date(data.start_time)
             const en_time = new Date(data.end_time)
-            setStartTime(st_time.getHours()+":"+st_time.getMinutes())
-            setEndTime(en_time.getHours()+":"+en_time.getMinutes())
+            let modified_st_hour = (st_time.getHours()<10?'0':'') + st_time.getHours()
+            let modified_st_min = (st_time.getMinutes()<10?'0':'') + st_time.getMinutes()
+            
+            let modified_en_hour = (en_time.getHours()<10?'0':'') + en_time.getHours()
+            let modified_en_min = (en_time.getMinutes()<10?'0':'') + en_time.getMinutes()
+
+            setStartTime(modified_st_hour+":"+modified_st_min)
+            setEndTime(modified_en_hour+":"+modified_en_min)
             setRequestedFor(data.requested_for.split('T')[0])
             setTotalSeats(data.total_seats)
         })

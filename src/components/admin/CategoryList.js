@@ -61,7 +61,7 @@ const CategoryList = () => {
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });
-                window.location = window.location
+                window.location.reload()
             } else {
                 toast.error(result.data.message, {
                     hideProgressBar: true

@@ -59,11 +59,11 @@ const MyTables = () => {
         let del_url = e.target.getAttribute('data-submit-url')
         axios.delete(del_url, getAxiosConfig())
         .then(result => {
-            if (result.data.success) {
+            if (result.status == 204) {
                 toast.success(result.data.message, {
                     hideProgressBar: true
                 });
-                window.location = window.location
+                window.location.reload()
             } else {
                 toast.error(result.data.message, {
                     hideProgressBar: true
